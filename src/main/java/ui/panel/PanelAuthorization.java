@@ -37,6 +37,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     private final GridBagConstraints constraints =  new GridBagConstraints();
 
     private final Presenter presenter;
+    private final ExecutorService service = Executors.newCachedThreadPool();
 
     public PanelAuthorization(Presenter presenter) {
         this.presenter = presenter;
@@ -132,7 +133,6 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     }
 
     private void startTextAnimation(String mess,CallbackTextAnimation callbackTextAnimation,String color) {
-        ExecutorService service = Executors.newCachedThreadPool();
         service.submit(new Runnable() {
             public void run() {
                 textAnimator.animationText(mess,callbackTextAnimation,color);
@@ -146,14 +146,14 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     }
 
     private void notValidError() {
-        String mess = "ошибка: поле логин или пароль пустое";
+        String mess = "ошибка: поле логин или пароль пустое!";
         String color = "red";
 
         startTextAnimation(mess,this,color);
     }
 
     public void registrationSuccessful() {
-        String mess = "новый пользователь успешно добавлен";
+        String mess = "новый пользователь успешно добавлен!";
         String color = "green";
 
         startTextAnimation(mess, this, color);
@@ -174,12 +174,11 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     }
 
     public void loginSuccessful() {
-        String mess = "вход выполнен успешно";
+        String mess = "вход выполнен успешно!";
         String color = "green";
 
         startTextAnimation(mess,this,color);
 
-        ExecutorService service = Executors.newCachedThreadPool();
         service.submit(new Runnable() {
             public void run() {
 

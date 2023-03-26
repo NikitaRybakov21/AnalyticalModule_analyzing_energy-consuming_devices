@@ -27,6 +27,8 @@ public class Presenter implements InterfacePresenter {
     private final MainApp mainApp;
     public JPanel panelCurrent;
 
+    private final ExecutorService service = Executors.newCachedThreadPool();
+
     public Presenter(MainApp mainApp) { this.mainApp = mainApp; }
 
     @Override
@@ -78,7 +80,6 @@ public class Presenter implements InterfacePresenter {
 
     @Override
     public void sendDataBaseAuthorization(String password, String login) {
-        ExecutorService service = Executors.newCachedThreadPool();
         service.submit(new Runnable() {
             public void run() {
                 ResponseStatus responseStatus = repository.sendLogin(new User(login, password));
@@ -95,7 +96,6 @@ public class Presenter implements InterfacePresenter {
 
     @Override
     public void sendDataBaseRegistration(String password, String login) {
-        ExecutorService service = Executors.newCachedThreadPool();
         service.submit(new Runnable() {
             public void run() {
                 ResponseStatus responseStatus = repository.sendAddUser(new User(login, password));
