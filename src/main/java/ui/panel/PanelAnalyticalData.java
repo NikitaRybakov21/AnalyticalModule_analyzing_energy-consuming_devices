@@ -14,17 +14,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 import static presentation.TypeModules.*;
+import static ui.main.MainApp.baseUrlImage;
 
 public class PanelAnalyticalData implements MouseListener , InterfacePanel {
 
     private final JPanel panelAnalyticalData = new JPanel();
 
     private final Graph graph = new Graph();
-    private final MaterialButton searchButton = new MaterialButton("Test", "buttonAnalytics.png","buttonAnalytics_pressed.png",101,30);
+    private final MaterialButton searchButton = new MaterialButton("Test", baseUrlImage +"buttonAnalytics.png",baseUrlImage +"buttonAnalytics_pressed.png",101,30);
 
-    private final MaterialButtonSlider slideButton1 = new MaterialButtonSlider("Test", "buttonSlide1.png","buttonSlide1_pressed.png",151,30);
-    private final MaterialButtonSlider slideButton2 = new MaterialButtonSlider("Test", "buttonSlide2.png","buttonSlide2_pressed.png",151,30);
-    private final MaterialButtonSlider slideButton3 = new MaterialButtonSlider("Test", "buttonSlide3.png","buttonSlide3_pressed.png",151,30);
+    private final MaterialButtonSlider slideButton1 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide1.png",baseUrlImage +"buttonSlide1_pressed.png",151,30);
+    private final MaterialButtonSlider slideButton2 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide2.png",baseUrlImage +"buttonSlide2_pressed.png",151,30);
+    private final MaterialButtonSlider slideButton3 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide3.png",baseUrlImage +"buttonSlide3_pressed.png",151,30);
 
     private final JTextField searchData = new JTextField(15);
 
@@ -102,7 +103,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
 
     private void createLabelApp(int widthScreen)  {
         int iconW = 200;
-        var icon = new ImageIcon("module_im.png");
+        var icon = new ImageIcon(baseUrlImage +"module_im.png");
         addComponents(new JLabel(icon),widthScreen - iconW - 3*paddingStart,paddingStart,iconW,iconW);
 
         int labelW = 290;

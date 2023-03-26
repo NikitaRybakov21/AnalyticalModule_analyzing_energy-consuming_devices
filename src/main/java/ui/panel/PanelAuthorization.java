@@ -10,6 +10,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static ui.main.MainApp.baseUrlImage;
+
 public class PanelAuthorization implements ActionListener , InterfacePanel {
 
     private final JPanel panelAuthorization = new JPanel();
@@ -19,8 +21,8 @@ public class PanelAuthorization implements ActionListener , InterfacePanel {
     private final JTextField textFieldPatronymic = new JTextField(15);
     private final JTextField textFieldSurname = new JTextField(15);
 
-    private final MaterialButton buttonLogin = new MaterialButton("Test", "buttonLogin.png","buttonLogin_pressed.png",338/2,114/2);
-    private final MaterialButton buttonRegistration = new MaterialButton("Test", "buttonRegistration.png", "buttonRegistration_pressed.png", 338/2, 114/2);
+    private final MaterialButton buttonLogin = new MaterialButton("Test", baseUrlImage + "buttonLogin.png",baseUrlImage + "buttonLogin_pressed.png",338/2,114/2);
+    private final MaterialButton buttonRegistration = new MaterialButton("Test", baseUrlImage + "buttonRegistration.png", baseUrlImage + "buttonRegistration_pressed.png", 338/2, 114/2);
 
     private final GridBagConstraints constraints =  new GridBagConstraints();
 

@@ -13,6 +13,7 @@ public class MainApp extends JFrame implements InterfaceMainApp {
     public static final int sizeY = 1100;
 
     public static final String nameApp = "AnalyticalModule";
+    public static final String baseUrlImage = "src/main/resources/images/";
 
     public static void main(String[] args) {
         ConnectDataBase.connect();
@@ -25,7 +26,7 @@ public class MainApp extends JFrame implements InterfaceMainApp {
         setSize(sizeX,sizeY);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        ImageIcon img = new ImageIcon("module.png");
+        ImageIcon img = new ImageIcon(baseUrlImage +"module.png");
         setIconImage(img.getImage());
 
         initView();
