@@ -1,4 +1,4 @@
-package presentation;
+package dataSourse;
 
 public enum TypeModules {
     MODULES_Effectiveness,

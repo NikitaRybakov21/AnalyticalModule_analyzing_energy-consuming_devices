@@ -1,5 +1,9 @@
 package presentation;
 
+import dataBaseRepository.repository.RepositoryImpl;
+import dataSourse.ResponseStatus;
+import dataSourse.TypeModules;
+import dataSourse.User;
 import ui.main.MainApp;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
@@ -9,9 +13,13 @@ import ui.panel.panelDetailsSlider.PanelLifeCycleModule;
 import ui.panel.panelDetailsSlider.PanelTechnicalSpecificationsModule;
 
 import javax.swing.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 
 public class Presenter implements InterfacePresenter {
+
+    private final RepositoryImpl repository = new RepositoryImpl();
 
     private final PanelAuthorization panelAuthorization = new PanelAuthorization(this);
     private PanelAnalyticalData panelAnalyticalData = new PanelAnalyticalData(this,MainApp.sizeX,MainApp.sizeY);
@@ -68,4 +76,35 @@ public class Presenter implements InterfacePresenter {
         return panel;
     }
 
+    @Override
+    public void sendDataBaseAuthorization(String password, String login) {
+        ExecutorService service = Executors.newCachedThreadPool();
+        service.submit(new Runnable() {
+            public void run() {
+                ResponseStatus responseStatus = repository.sendLogin(new User(login, password));
+
+                switch (responseStatus) {
+                    case Login_isSuccessful -> SwingUtilities.invokeLater(panelAuthorization::loginSuccessful);
+                    case Login_Error -> SwingUtilities.invokeLater(panelAuthorization::loginError);
+                }
+            }
+        });
+    }
+
+
+
+    @Override
+    public void sendDataBaseRegistration(String password, String login) {
+        ExecutorService service = Executors.newCachedThreadPool();
+        service.submit(new Runnable() {
+            public void run() {
+                ResponseStatus responseStatus = repository.sendAddUser(new User(login, password));
+
+                switch (responseStatus) {
+                    case Registration_isSuccessful -> SwingUtilities.invokeLater(panelAuthorization::registrationSuccessful);
+                    case Registration_Error -> SwingUtilities.invokeLater(panelAuthorization::registrationError);
+                }
+            }
+        });
+    }
 }

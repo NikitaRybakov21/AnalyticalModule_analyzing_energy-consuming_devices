@@ -1,10 +1,12 @@
 package dataBaseRepository.connect;
 
+import dataBaseRepository.client.ClientMapper;
+
 import java.sql.*;
 
 public class ConnectDataBase {
 
-    private static final String DATA_BASE_NAME = "postgres";
+    private static final String DATA_BASE_NAME = "dataBaseAnalyticsModule";
     private static final String HOST = "localhost";
     private static final String PORT = "5432";
 
@@ -13,7 +15,8 @@ public class ConnectDataBase {
 
     private static Connection connection;
 
-    public static void connect() {
+    public static ClientMapper getConnect() {
+        ClientMapper clientMapper = null;
 
         try {
             String url = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATA_BASE_NAME;
@@ -21,20 +24,20 @@ public class ConnectDataBase {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connection to the " + DATA_BASE_NAME + " database is successful");
 
-            Statement statement = connection.createStatement();
-
-            String query = "SELECT * FROM \"Users\"";
-            ResultSet rs = statement.executeQuery(query);
-
-            while (rs.next()) {
-                System.out.println(rs.getRow() + "    " + rs.getString("password") + "\t");
-            }
-            statement.close();
+            clientMapper = new ClientMapper(connection);
 
         } catch (SQLException e) {
             e.printStackTrace();
-        } finally {
-            try { connection.close(); } catch(SQLException ignored) {  }
+
+            try { connection.close();
+            } catch (SQLException throwable) {
+                throwable.printStackTrace();
+            }
+
+            System.out.println("Connection to the " + DATA_BASE_NAME + " database - ERROR");
         }
+        return clientMapper;
     }
 }
+
+

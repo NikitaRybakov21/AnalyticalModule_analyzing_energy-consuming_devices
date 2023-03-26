@@ -16,8 +16,6 @@ public class MainApp extends JFrame implements InterfaceMainApp {
     public static final String baseUrlImage = "src/main/resources/images/";
 
     public static void main(String[] args) {
-        ConnectDataBase.connect();
-
         new MainApp(nameApp , sizeX ,sizeY);
     }
 

@@ -1,16 +1,80 @@
 package dataBaseRepository.client;
 
+import dataSourse.User;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 
-public class ClientMapper {
+public class ClientMapper implements InterfaceClientMapper{
+
     Connection connection;
+
     public ClientMapper(Connection connection){
         this.connection = connection;
     }
+
+    @Override
+    public User getUser(User user) {
+        String query =  "SELECT * FROM Users WHERE  name = '"+user.login+"'";
+        User dataBaseUser = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if(rs.next()) {
+                System.out.println(rs.getRow() + "  select user  " + rs.getString("name") + "\t");
+                dataBaseUser = new User(rs.getString("name"),rs.getString("password"));
+            } else {
+                System.out.println("select user NULL");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dataBaseUser;
+    }
+
+
+    @Override
+    public User addUser(User user) {
+        String query =  "INSERT INTO Users (name,password) VALUES ('"+user.login+"','"+user.password+"');";
+        User newDataBaseUser = null;
+
+        try {
+            if(getUser(user) == null) {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                int rs = preparedStatement.executeUpdate();
+
+                newDataBaseUser = user;
+
+                System.out.println("select user added");
+            } else {
+                System.out.println("select user already exists");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return newDataBaseUser;
+    }
+
+
+
+       /*   Statement statement = connection.createStatement();
+
+            String query = "SELECT * FROM \"Users\"";
+            ResultSet rs = statement.executeQuery(query);
+
+            while (rs.next()) {
+                System.out.println(rs.getRow() + "    " + rs.getString("password") + "\t");
+            }
+            statement.close();    */
+
+
 
     /**
      * Удаление контрагентов с определенным названием
@@ -93,12 +157,12 @@ public class ClientMapper {
             ResultSet rs = preparedStatement.executeQuery(query);
             while (rs.next()) {
                 //.markNew() сетит в юнит оф ворк объекты
-                new Client().setId(rs.getString(1))
+               /* new Client().setId(rs.getString(1))
                         .setName(rs.getString(2))
                         .setContact(rs.getString(3))
                         .setPhoneNumber(rs.getString(4))
                         .setCapital(rs.getDouble(5))
-                        .markNew();
+                        .markNew();*/
             }
         } catch (SQLException e) {
             e.printStackTrace();

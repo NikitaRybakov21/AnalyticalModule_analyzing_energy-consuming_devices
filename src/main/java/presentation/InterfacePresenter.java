@@ -1,5 +1,6 @@
 package presentation;
 
+import dataSourse.TypeModules;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
 
@@ -11,4 +12,6 @@ public interface InterfacePresenter {
     void setPanelDetailModule(TypeModules typeModules);
     PanelAnalyticalData getNewPanelAnalyticalData(int widthScreen, int heightScreen);
     void restoreModule();
+    void sendDataBaseAuthorization(String password, String login);
+    void sendDataBaseRegistration(String password, String login);
 }

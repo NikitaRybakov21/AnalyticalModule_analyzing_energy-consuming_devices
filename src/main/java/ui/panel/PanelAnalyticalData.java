@@ -14,7 +14,7 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import static presentation.TypeModules.*;
+import static dataSourse.TypeModules.*;
 import static ui.main.MainApp.baseUrlImage;
 
 public class PanelAnalyticalData implements MouseListener , InterfacePanel {
