@@ -20,7 +20,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel {
     private final JTextField textFieldSurname = new JTextField(15);
 
     private final MaterialButton buttonLogin = new MaterialButton("Test", "buttonLogin.png","buttonLogin_pressed.png",338/2,114/2);
-    private final MaterialButton buttonRegistration = new MaterialButton("Test", "buttonRegistration.png", "buttonRegistration_pressed.png", 338 / 2, 114 / 2);
+    private final MaterialButton buttonRegistration = new MaterialButton("Test", "buttonRegistration.png", "buttonRegistration_pressed.png", 338/2, 114/2);
 
     private final GridBagConstraints constraints =  new GridBagConstraints();
 

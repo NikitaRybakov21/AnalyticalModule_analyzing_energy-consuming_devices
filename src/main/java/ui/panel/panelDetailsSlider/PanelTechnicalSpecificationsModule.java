@@ -14,8 +14,6 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
     private final JPanel panelTechnicalSpecificationsModule = new JPanel();
     private final GridBagLayout gridBagLayout = new GridBagLayout();
 
-    private final Font fontHeader = new Font("Verdana", Font.PLAIN, 48);
-    private final JLabel label = new JLabel("Технические характкристики");
     private final GridBagConstraints constraints =  new GridBagConstraints();
     private final Presenter presenter;
 
@@ -24,8 +22,10 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
         panelTechnicalSpecificationsModule.setBackground(MainApp.getRGBColor(254,254,254));
         panelTechnicalSpecificationsModule.setLayout(gridBagLayout);
 
+        JLabel label = new JLabel("Технические характкристики");
+        Font fontHeader = new Font("Verdana", Font.PLAIN, 48);
         label.setFont(fontHeader);
-        addComponent(0,0,label,new Insets(0, 0, 0,0),1,0,GridBagConstraints.CENTER);
+        addComponent(0,0, label,new Insets(0, 0, 0,0),1,0,GridBagConstraints.CENTER);
     }
 
     private void addComponent(int gridX, int gridY, Component component, Insets insets, int gridWidth, int height, int fill) {
