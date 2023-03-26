@@ -58,15 +58,20 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     }
 
     private void createTextField() {
-        Font fontName = new Font("Verdana", Font.PLAIN, 11);
+        Font fontLabel = new Font("Verdana", Font.PLAIN, 11);
+        Font fontTextField = new Font("Verdana", Font.PLAIN, 15);
+
         JLabel labelName = new JLabel("логин");
-        labelName.setFont(fontName);
+        labelName.setFont(fontLabel);
+        textFieldName.setFont(fontTextField);
+
         addComponent(0,1, labelName,new Insets(14, 0, 0,0),2,0,GridBagConstraints.HORIZONTAL);
         addComponent(0,2, textFieldName,new Insets(2, 0, 0,0),2,20,GridBagConstraints.HORIZONTAL);
 
-
         JLabel labelPassword = new JLabel("пароль");
-        labelPassword.setFont(fontName);
+        labelPassword.setFont(fontLabel);
+        textFieldPassword.setFont(fontTextField);
+
         addComponent(0,3, labelPassword,new Insets(14, 0, 0,0),2,0,GridBagConstraints.HORIZONTAL);
         addComponent(0,4, textFieldPassword,new Insets(2, 0, 0,0), 2,20,GridBagConstraints.HORIZONTAL);
     }
