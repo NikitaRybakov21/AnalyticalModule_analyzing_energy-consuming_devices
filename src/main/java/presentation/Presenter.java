@@ -3,6 +3,7 @@ package presentation;
 import ui.main.MainApp;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
+import ui.panel.panelDetailsSlider.PanelDefault;
 import ui.panel.panelDetailsSlider.PanelEffectivenessModule;
 import ui.panel.panelDetailsSlider.PanelLifeCycleModule;
 import ui.panel.panelDetailsSlider.PanelTechnicalSpecificationsModule;
@@ -38,7 +39,7 @@ public class Presenter implements InterfacePresenter {
             case MODULES_Effectiveness -> panelModule = new PanelEffectivenessModule(this).getPanel();
             case MODULES_TechnicalSpecifications -> panelModule = new PanelTechnicalSpecificationsModule(this).getPanel();
             case MODULES_LifeCycleModule -> panelModule = new PanelLifeCycleModule(this).getPanel();
-            default -> panelModule = null;
+            case MODULES_Default -> panelModule = new PanelDefault(this).getPanel();
         }
 
         panelAnalyticalData.setPanelDetails(panelModule);

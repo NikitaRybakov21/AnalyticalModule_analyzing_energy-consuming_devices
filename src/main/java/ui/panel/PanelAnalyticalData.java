@@ -7,6 +7,7 @@ import ui.componentsView.MaterialButton;
 import ui.componentsView.MaterialButtonSlider;
 import ui.main.MainApp;
 import ui.panel.interfacesPanel.InterfacePanel;
+import ui.panel.panelDetailsSlider.PanelDefault;
 
 import javax.swing.*;
 import java.awt.*;
@@ -50,17 +51,19 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
         this.heightScreen = heightScreen;
 
         panelAnalyticalData.setLayout(null);
-        panelAnalyticalData.setBackground(MainApp.getRGBColor(254,254,254));
+        panelAnalyticalData.setBackground(MainApp.getRGBColor(240,240,254));
 
         createSearch();
         createLabelApp(widthScreen);
         createSlider(widthScreen);
+
+        setPanelDetails(new PanelDefault(presenter).getPanel());
     }
 
     JPanel currentPanel = null;
 
     public void setPanelDetails(JPanel panel) {
-        final int paddingTopLine = paddingTop + searchButtonHeight + 6 * paddingTop;
+        final int paddingTopLine = paddingTop + searchButtonHeight + 7 * paddingTop;
 
         if(currentPanel != null) {
             panelAnalyticalData.remove(currentPanel);
@@ -85,7 +88,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
     }
 
     private void createSlider(int widthScreen)  {
-        final int paddingTopLine = paddingTop + searchButtonHeight + 6 * paddingTop;
+        final int paddingTopLine = paddingTop + searchButtonHeight + 7 * paddingTop;
         final int y = paddingTopLine - searchButtonHeight;
 
         slideButton1.addMouseListener(this);
@@ -104,11 +107,11 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
     private void createLabelApp(int widthScreen)  {
         int iconW = 200;
         var icon = new ImageIcon(baseUrlImage +"module_im.png");
-        addComponents(new JLabel(icon),widthScreen - iconW - 3*paddingStart,paddingStart,iconW,iconW);
+        addComponents(new JLabel(icon),widthScreen - iconW - 3*paddingStart,2*paddingStart,iconW,iconW);
 
         int labelW = 290;
         appName.setFont(fontAppName);
-        addComponents(appName,(widthScreen - labelW - (iconW + 3*paddingStart)),0, labelW , 100);
+        addComponents(appName,(widthScreen - labelW - (iconW + 3*paddingStart)),paddingStart, labelW , 100);
     }
 
     private void addComponents(Component component, int x, int y, int width, int height) {
