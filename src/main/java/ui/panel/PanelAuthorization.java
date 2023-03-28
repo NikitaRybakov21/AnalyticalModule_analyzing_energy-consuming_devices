@@ -8,6 +8,9 @@ import ui.panel.interfacesPanel.CallbackTextAnimation;
 import ui.panel.interfacesPanel.InterfacePanel;
 
 import javax.swing.*;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -62,6 +65,9 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
         Font fontLabel = new Font("Verdana", Font.PLAIN, 11);
         Font fontTextField = new Font("Verdana", Font.PLAIN, 15);
 
+        textFieldPassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        textFieldName.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+
         JLabel labelName = new JLabel("логин");
         labelName.setFont(fontLabel);
         textFieldName.setFont(fontTextField);
@@ -111,6 +117,8 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
 
     @Override
     public void actionPerformed(ActionEvent event) {
+        textFieldPassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        textFieldName.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
 
         String password = textFieldPassword.getText();
         String login = textFieldName.getText();
@@ -120,6 +128,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
                 presenter.sendDataBaseAuthorization(password, login);
             } else {
                 notValidError();
+              //  loginSuccessful();
             }
         }
 
@@ -150,6 +159,8 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
         String color = "red";
 
         startTextAnimation(mess,this,color);
+        textFieldPassword.setBorder(new LineBorder(Color.RED, 1));
+        textFieldName.setBorder(new LineBorder(Color.RED, 1));
     }
 
     public void registrationSuccessful() {

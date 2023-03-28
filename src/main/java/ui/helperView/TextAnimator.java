@@ -14,7 +14,7 @@ public class TextAnimator implements InterfaceTextAnimator{
         for (int i = 0; i < mess.length(); i++) {
             messAnimation.append(mess.charAt(i));
 
-            try { Thread.sleep(40);
+            try { Thread.sleep(30);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

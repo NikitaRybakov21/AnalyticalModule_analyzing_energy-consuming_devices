@@ -10,6 +10,7 @@ import ui.panel.interfacesPanel.InterfacePanel;
 import ui.panel.panelDetailsSlider.PanelDefault;
 
 import javax.swing.*;
+import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -21,7 +22,6 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
 
     private final JPanel panelAnalyticalData = new JPanel();
 
-    private final Graph graph = new Graph();
     private final MaterialButton searchButton = new MaterialButton("Test", baseUrlImage +"buttonAnalytics.png",baseUrlImage +"buttonAnalytics_pressed.png",101,30);
 
     private final MaterialButtonSlider slideButton1 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide1.png",baseUrlImage +"buttonSlide1_pressed.png",151,30);
@@ -51,7 +51,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
         this.heightScreen = heightScreen;
 
         panelAnalyticalData.setLayout(null);
-        panelAnalyticalData.setBackground(MainApp.getRGBColor(240,240,254));
+        panelAnalyticalData.setBackground(MainApp.getRGBColor(230,230,254));
 
         createSearch();
         createLabelApp(widthScreen);
@@ -78,6 +78,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
         searchButton.addMouseListener(this);
 
         int searchDataWidth = 800;
+        searchData.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
         addComponents(searchData, paddingStart,paddingTop, searchDataWidth,searchButtonHeight);
 
         int searchButtonWidth = 101;

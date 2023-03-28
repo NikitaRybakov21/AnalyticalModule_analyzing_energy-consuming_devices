@@ -1,6 +1,5 @@
 package ui.main;
 
-import dataBaseRepository.connect.ConnectDataBase;
 import presentation.Presenter;
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +20,7 @@ public class MainApp extends JFrame implements InterfaceMainApp {
 
     public MainApp(String header, int sizeX, int sizeY) {
         super(header);
+
         setSize(sizeX,sizeY);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
