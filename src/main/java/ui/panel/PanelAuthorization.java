@@ -125,7 +125,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
                 presenter.sendDataBaseAuthorization(password, login);
             } else {
                 notValidError();
-                loginSuccessful();
+               // loginSuccessful();
             }
         }
 
@@ -190,8 +190,8 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
         service.submit(new Runnable() {
             public void run() {
 
-             //   try { Thread.sleep(1500);
-            //    } catch (InterruptedException e) { e.printStackTrace(); }
+                try { Thread.sleep(1500);
+                } catch (InterruptedException e) { e.printStackTrace(); }
 
                 SwingUtilities.invokeLater(presenter::navigatePanelsAuthorToAnalytical);
             }

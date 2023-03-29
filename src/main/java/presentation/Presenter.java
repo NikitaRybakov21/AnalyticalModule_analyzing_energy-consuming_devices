@@ -94,8 +94,8 @@ public class Presenter implements InterfacePresenter {
         });
     }
 
-    public Device device = new Device("Лампа12","54");
-    private ArrayList<PowerDevice> listPowerSave = GenRes.getArrayListPowerDevices();
+    public Device device = null;
+    private ArrayList<PowerDevice> listPowerSave;
 
     @Override
     public void sendGetDeviceToAnalytical(String name) {
@@ -103,7 +103,7 @@ public class Presenter implements InterfacePresenter {
             device = repository.sendGetDevices(name);
 
             if (device != null) {
-                listPowerSave = GenRes.getArrayListPowerDevices();
+                listPowerSave = repository.getListPowerDevices(device.id);
                 SwingUtilities.invokeLater(panelAnalyticalData::devicesSuccessful);
             } else {
                 SwingUtilities.invokeLater(panelAnalyticalData::nullDevices);

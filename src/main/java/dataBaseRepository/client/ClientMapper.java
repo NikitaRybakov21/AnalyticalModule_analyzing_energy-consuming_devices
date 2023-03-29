@@ -1,6 +1,7 @@
 package dataBaseRepository.client;
 
 import dataSourse.Device;
+import dataSourse.PowerDevice;
 import dataSourse.User;
 
 import java.sql.Connection;
@@ -8,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.UUID;
 
@@ -75,7 +77,7 @@ public class ClientMapper implements InterfaceClientMapper{
 
             if(rs.next()) {
                 System.out.println(rs.getRow() + "  device  " + rs.getString("name") +"  "+ rs.getString("iddevices") + "\t");
-                deviceDB = new Device(rs.getString("name"),rs.getString("iddevices"));
+                deviceDB = new Device(rs.getString("name"),rs.getString("iddevices"),rs.getString("power"));
             } else {
                 System.out.println("device NULL");
             }
@@ -99,5 +101,44 @@ public class ClientMapper implements InterfaceClientMapper{
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void setDataPowerDevices(ArrayList<PowerDevice> listPower) {
+        for (PowerDevice powerDevice : listPower) {
+            String query = "INSERT INTO power_devices (iddevices,working_time,input_power,effect_power) VALUES ('" + powerDevice.id + "','" + powerDevice.time + "','" + powerDevice.inputPower + "','" + powerDevice.effectivePower + "');";
+
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                int rs = preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<PowerDevice> getListPowerDevices(String id) {
+        ArrayList<PowerDevice> listPowerDevices = new ArrayList<>();
+        String query =  "SELECT * FROM power_devices WHERE iddevices = '"+id+"'";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                listPowerDevices.add(new PowerDevice(
+                        Integer.parseInt(rs.getString("iddevices")),
+                        Float.parseFloat(rs.getString("working_time")),
+                        Float.parseFloat(rs.getString("input_power")),
+                        Float.parseFloat(rs.getString("effect_power"))
+                        )
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listPowerDevices;
     }
 }

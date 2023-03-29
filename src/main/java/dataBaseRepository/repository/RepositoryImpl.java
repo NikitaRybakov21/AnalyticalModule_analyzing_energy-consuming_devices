@@ -4,8 +4,13 @@ import dataBaseRepository.client.ClientMapper;
 import dataBaseRepository.connect.ConnectDataBase;
 import dataBaseRepository.interfaces.Repository;
 import dataSourse.Device;
+import dataSourse.PowerDevice;
 import dataSourse.ResponseStatus;
 import dataSourse.User;
+import geniratorRes.GenRes;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static dataSourse.ResponseStatus.*;
 
@@ -53,7 +58,20 @@ public class RepositoryImpl implements Repository {
 
     @Override
     public Device sendGetDevices(String name) {
+
+        Device device = clientMapper.getDevices(name);
+
+  /*      if (device != null) {
+            clientMapper.setDataPowerDevices(GenRes.getArrayListPowerDevices());
+            System.out.println("ок set power");
+        }*/
+
         clientMapper.addHistory(userSaved);
-        return clientMapper.getDevices(name);
+        return device;
+    }
+
+    @Override
+    public ArrayList<PowerDevice> getListPowerDevices(String id) {
+        return clientMapper.getListPowerDevices(id);
     }
 }

@@ -2,6 +2,9 @@ package ui.panel.panelDetailsSlider;
 
 import dataSourse.PointF;
 import dataSourse.PowerDevice;
+import mathematicalModels.CalculationOfEfficiency;
+import mathematicalModels.PairAB;
+import mathematicalModels.SumOfSquaredErrorsSSE;
 import presentation.Presenter;
 import ui.componentsView.Graph;
 import ui.main.MainApp;
@@ -28,15 +31,26 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
         panelEffectivenessModule.setLayout(gridBagLayout);
 
         createHeader(presenter);
-        createLabelKPD();
+        createLabelKPD(presenter.device.power);
         createGraphUi();
     }
 
     private void createGraphUi() {
-        Graph graph = createGraph();
+        ArrayList<PointF> listPoints = getListPoints();
+        PairAB pairAB = SumOfSquaredErrorsSSE.sse(listPoints);
+        double a = pairAB.a;
+        double b = pairAB.b;
+        Graph graph = new Graph( x -> a * x + b,listPoints);
+
         addComponent(1,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
 
-        JLabel nameGraph = new JLabel("<html>Регрессионный анализ эффективности.<br><br><font color='blue'>Ось X -время работы устройтова в ( часах )<br>Ось Y -КПД устройства в ( % )</font></html>");
+        JLabel nameGraph = new JLabel(
+                "<html>Регрессионный анализ эффективности.<br>" + "<br>" +
+                "<font color='#708090'>Ось X -время работы устройтова в </font>( часах )<br>" +
+                "<font color='#708090'>Ось Y -КПД устройства в </font>( % )<br>" +
+                "<font color='#708090'>регрессионная прямая </font>y="+String.format("%.2f", a)+"*x+"+String.format("%.2f", b)+"</html>"
+        );
+
         nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
         addComponent(1,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
     }
@@ -57,29 +71,14 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
         addComponent(0,1, labelNameDevices,new Insets(15, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
     }
 
-    private void createLabelKPD() {
-        JLabel labelPowerInput = new JLabel(calcKpd());
+    private void createLabelKPD(String power) {
+        JLabel labelPowerInput = new JLabel(CalculationOfEfficiency.calculationKpd(listPower,power));
         labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 28));
 
         addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
     }
 
-    private String calcKpd() {
-        int sumInputPower = 0;
-        int sumEffPower = 0;
-        int timeSum = 0;
-        for (PowerDevice powerDevice : listPower) {
-            sumInputPower += powerDevice.inputPower;
-            sumEffPower += powerDevice.effectivePower;
-            timeSum += powerDevice.time;
-        }
-        float valueKpd = (((float) sumEffPower/sumInputPower)*100f);
-        String kpd = String.format("%.2f", valueKpd);
-        return "<html>Oбщая потребляемая мощность: "+sumInputPower+" ватт<br>Oбщая производимая полезная мощность: "+sumEffPower+" ватт<br>Oбщее время работы: "+timeSum+" cек<br>  <br>Среднее КПД = "+kpd+"%";
-    }
-
-
-    private Graph createGraph() {
+    private ArrayList<PointF> getListPoints() {
         ArrayList<PointF> listPoint = new ArrayList<>();
 
         for (PowerDevice powerDevice : listPower) {
@@ -89,8 +88,7 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
 
             listPoint.add(new PointF(x, y));
         }
-
-        return new Graph( x -> sin(x)+3 , listPoint);
+        return listPoint;
     }
 
     private void addComponent(int gridX, int gridY, Component component, Insets insets, int gridWidth,int gridHeight, int height, int fill) {

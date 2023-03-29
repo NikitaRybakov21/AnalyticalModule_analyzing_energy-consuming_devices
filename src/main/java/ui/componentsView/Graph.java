@@ -16,14 +16,14 @@ public class Graph extends JComponent {
     private final Point y1 = new Point(padding,padding);
     private final Point x1 = new Point(width - padding,height - padding);
 
-    private final int stepX = 40;
-    private final int stepY = 40;
+    private final int stepX = 29;
+    private final int stepY = 30;
 
     private final float stepValueX = 1f;
-    private final float stepValueY = 1f;
+    private final float stepValueY = 10f;
 
     private final int startX = 0;
-    private final int endX = 20;
+    private final int endX = 24 + 10;
 
     private double animatedX = startX;
 
@@ -45,7 +45,7 @@ public class Graph extends JComponent {
 
         drawBackground(g2);
         drawLine(g2);
-    //    drawGraph(g2);
+        drawGraph(g2);
         drawGraphPoint(g2);
 
         if(animatedX <= endX) {
@@ -54,8 +54,8 @@ public class Graph extends JComponent {
     }
 
     private void drawBackground(Graphics2D g2) {
-        g2.setColor(MainApp.getRGBColor(245,245,245));
-        g2.fillRoundRect(0,0,width,height,46,46);
+        g2.setColor(MainApp.getRGBColor(244,244,244));
+        g2.fillRoundRect(0,0,width,height,66,66);
     }
 
     private void drawLine(Graphics2D g2) {
@@ -77,14 +77,14 @@ public class Graph extends JComponent {
 
             g2.drawString(String.valueOf((int)((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
         }
-        
+
         for (int i = 0; XOY.y - stepY*(i + 1) > y1.y; i++) {
 
             g2.setColor(Color.GRAY);
             g2.drawLine(XOY.x - del, XOY.y - stepY*(i + 1), XOY.x + del, XOY.y - stepY*(i + 1));
             g2.setColor(Color.BLACK);
 
-            g2.drawString(String.valueOf((int)((i+1)*stepValueY)), XOY.x - padding/1.5f, XOY.y - stepY*(i + 1));
+            g2.drawString(String.valueOf((int)((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
         }
 
         g2.setColor(Color.BLUE);
@@ -95,12 +95,12 @@ public class Graph extends JComponent {
     }
 
     private void drawGraph(Graphics2D g2) {
-        g2.setColor(Color.RED);
+        g2.setColor(MainApp.getRGBColor(50,50,255));
 
         double stepFX = 0.02;
 
-        double speedStartAnimation = 0.002f;
-        double speedAnimation = speedStartAnimation * (endX - animatedX);
+        double speedStartAnimation = 0.005f;
+        double speedAnimation = speedStartAnimation * (endX - animatedX + 3) ;
         animatedX += speedAnimation;
 
         double x = startX;
