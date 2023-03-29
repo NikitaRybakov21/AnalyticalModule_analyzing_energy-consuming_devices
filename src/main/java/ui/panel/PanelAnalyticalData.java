@@ -1,9 +1,7 @@
 package ui.panel;
 
-import dataSourse.Device;
 import presentation.Presenter;
 import ui.componentsView.ComponentsView;
-import ui.componentsView.Graph;
 import ui.componentsView.MaterialButton;
 import ui.componentsView.MaterialButtonSlider;
 import ui.helperView.TextAnimator;
@@ -17,8 +15,6 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -117,8 +113,11 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
         addComponents(slideButton2, sliderButtonWidth, y, sliderButtonWidth,searchButtonHeight);
         addComponents(slideButton3,2 * sliderButtonWidth, y, sliderButtonWidth,searchButtonHeight);
 
-        ComponentsView componentsView = new ComponentsView(widthScreen);
-        addComponents(componentsView, 0,paddingTopLine, widthScreen ,2);
+        ComponentsView componentsViewBottom = new ComponentsView(widthScreen);
+        addComponents(componentsViewBottom, 0,paddingTopLine, widthScreen ,2);
+
+     //   ComponentsView componentsViewTop = new ComponentsView(widthScreen);
+     //   addComponents(componentsViewTop, 0,0, widthScreen ,1);
     }
 
     private void createLabelApp(int widthScreen)  {
@@ -172,7 +171,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
 
             searchData.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
             String name = searchData.getText();
-            presenter.sendGetDevice(name);
+            presenter.sendGetDeviceToAnalytical(name);
         }
     }
 

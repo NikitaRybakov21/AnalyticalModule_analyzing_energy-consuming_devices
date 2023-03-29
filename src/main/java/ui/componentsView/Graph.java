@@ -1,9 +1,10 @@
 package ui.componentsView;
 
+import dataSourse.PointF;
 import ui.main.MainApp;
-
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Graph extends JComponent {
 
@@ -18,16 +19,21 @@ public class Graph extends JComponent {
     private final int stepX = 40;
     private final int stepY = 40;
 
+    private final float stepValueX = 1f;
+    private final float stepValueY = 1f;
+
     private final int startX = 0;
     private final int endX = 20;
 
     private double animatedX = startX;
 
-    Font font = new Font("Verdana", Font.PLAIN, 15);
-    CallBackFun callBackFun;
+    private final Font font = new Font("Verdana", Font.PLAIN, 15);
+    private final CallBackFun callBackFun;
+    private final ArrayList<PointF> listPoint;
 
-    public Graph(CallBackFun callbackFun) {
+    public Graph(CallBackFun callbackFun, ArrayList<PointF> listPoint) {
         this.callBackFun = callbackFun;
+        this.listPoint = listPoint;
     }
 
     @Override
@@ -39,7 +45,8 @@ public class Graph extends JComponent {
 
         drawBackground(g2);
         drawLine(g2);
-        drawGraph(g2);
+    //    drawGraph(g2);
+        drawGraphPoint(g2);
 
         if(animatedX <= endX) {
             repaint();
@@ -67,16 +74,24 @@ public class Graph extends JComponent {
             g2.setColor(Color.GRAY);
             g2.drawLine(XOY.x + stepX*(i + 1), XOY.y + del, XOY.x + stepX*(i + 1), XOY.y - del);
             g2.setColor(Color.BLACK);
-            g2.drawString(String.valueOf(i+1), XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
-        }
 
+            g2.drawString(String.valueOf((int)((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
+        }
+        
         for (int i = 0; XOY.y - stepY*(i + 1) > y1.y; i++) {
 
             g2.setColor(Color.GRAY);
             g2.drawLine(XOY.x - del, XOY.y - stepY*(i + 1), XOY.x + del, XOY.y - stepY*(i + 1));
             g2.setColor(Color.BLACK);
-            g2.drawString(String.valueOf(i+1), XOY.x - padding/1.5f, XOY.y - stepY*(i + 1));
+
+            g2.drawString(String.valueOf((int)((i+1)*stepValueY)), XOY.x - padding/1.5f, XOY.y - stepY*(i + 1));
         }
+
+        g2.setColor(Color.BLUE);
+        g2.setFont(new Font("Verdana", Font.PLAIN, 25));
+        g2.drawString("Y", XOY.x - padding/1.5f, y1.y);
+        g2.drawString("X" , x1.x, XOY.y + padding/1.5f);
+        g2.setFont(font);
     }
 
     private void drawGraph(Graphics2D g2) {
@@ -93,13 +108,29 @@ public class Graph extends JComponent {
 
             double fx = callBackFun.getValueFunX(x);
 
-            int gx = (int) (x * stepX + XOY.x);
-            int gy = (int) (XOY.y - fx * stepY);
+            int gx = (int) (x * stepX * (1f/stepValueX)   + XOY.x);
+            int gy = (int) (XOY.y - fx * stepY * (1f/stepValueY) );
 
             if(gx < width) {
                 g2.drawLine(gx, gy, gx, gy);
             }
             x += stepFX;
+        }
+    }
+
+    private void drawGraphPoint(Graphics2D g2) {
+        g2.setColor(Color.RED);
+
+        for (PointF point : listPoint) {
+            double y = point.y;
+            double x = point.x;
+
+            int gx = (int) (x * stepX * (1f/stepValueX)  + XOY.x);
+            int gy = (int) (XOY.y - y * stepY * (1f/stepValueY) );
+
+            if(gx < width) {
+                g2.drawArc(gx - 1, gy - 1, 2, 2, 0, 360);
+            }
         }
     }
 
