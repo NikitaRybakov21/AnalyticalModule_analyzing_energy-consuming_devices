@@ -6,10 +6,7 @@ import ui.main.MainApp;
 import ui.helperView.TextAnimator;
 import ui.panel.interfacesPanel.CallbackTextAnimation;
 import ui.panel.interfacesPanel.InterfacePanel;
-
 import javax.swing.*;
-import javax.swing.border.BevelBorder;
-import javax.swing.border.Border;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -94,7 +91,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     private void createTextInfo() {
         Font fontInfo = new Font("Verdana", Font.PLAIN, 15);
         textInfo.setFont(fontInfo);
-        addComponent(0,6, textInfo,new Insets(50, 0, 0,0),2,0,GridBagConstraints.CENTER);
+        addComponent(0,6, textInfo,new Insets(30, 0, 0,0),2,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void addComponent(int gridX, int gridY, Component component, Insets insets, int gridWidth, int height, int fill) {

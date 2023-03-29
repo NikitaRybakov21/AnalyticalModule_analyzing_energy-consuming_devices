@@ -1,6 +1,7 @@
 package presentation;
 
 import dataBaseRepository.repository.RepositoryImpl;
+import dataSourse.Device;
 import dataSourse.ResponseStatus;
 import dataSourse.TypeModules;
 import dataSourse.User;
@@ -80,30 +81,39 @@ public class Presenter implements InterfacePresenter {
 
     @Override
     public void sendDataBaseAuthorization(String password, String login) {
-        service.submit(new Runnable() {
-            public void run() {
-                ResponseStatus responseStatus = repository.sendLogin(new User(login, password));
+        service.submit(() -> {
+            ResponseStatus responseStatus = repository.sendLogin(new User(login, password));
 
-                switch (responseStatus) {
-                    case Login_isSuccessful -> SwingUtilities.invokeLater(panelAuthorization::loginSuccessful);
-                    case Login_Error -> SwingUtilities.invokeLater(panelAuthorization::loginError);
-                }
+            switch (responseStatus) {
+                case Login_isSuccessful -> SwingUtilities.invokeLater(panelAuthorization::loginSuccessful);
+                case Login_Error -> SwingUtilities.invokeLater(panelAuthorization::loginError);
             }
         });
     }
 
+    public Device device = null;
 
+    @Override
+    public void sendGetDevice(String name) {
+        service.submit(() -> {
+            device = repository.sendGetDevices(name);
+
+            if (device != null) {
+                SwingUtilities.invokeLater(panelAnalyticalData::devicesSuccessful);
+            } else {
+                SwingUtilities.invokeLater(panelAnalyticalData::nullDevices);
+            }
+        });
+    }
 
     @Override
     public void sendDataBaseRegistration(String password, String login) {
-        service.submit(new Runnable() {
-            public void run() {
-                ResponseStatus responseStatus = repository.sendAddUser(new User(login, password));
+        service.submit(() -> {
+            ResponseStatus responseStatus = repository.sendAddUser(new User(login, password));
 
-                switch (responseStatus) {
-                    case Registration_isSuccessful -> SwingUtilities.invokeLater(panelAuthorization::registrationSuccessful);
-                    case Registration_Error -> SwingUtilities.invokeLater(panelAuthorization::registrationError);
-                }
+            switch (responseStatus) {
+                case Registration_isSuccessful -> SwingUtilities.invokeLater(panelAuthorization::registrationSuccessful);
+                case Registration_Error -> SwingUtilities.invokeLater(panelAuthorization::registrationError);
             }
         });
     }

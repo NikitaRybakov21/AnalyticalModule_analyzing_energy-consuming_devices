@@ -3,6 +3,7 @@ package dataBaseRepository.repository;
 import dataBaseRepository.client.ClientMapper;
 import dataBaseRepository.connect.ConnectDataBase;
 import dataBaseRepository.interfaces.Repository;
+import dataSourse.Device;
 import dataSourse.ResponseStatus;
 import dataSourse.User;
 
@@ -11,6 +12,7 @@ import static dataSourse.ResponseStatus.*;
 public class RepositoryImpl implements Repository {
 
     private final ClientMapper clientMapper = ConnectDataBase.getConnect();
+    private User userSaved;
 
     @Override
     public ResponseStatus sendLogin(User user) {
@@ -20,6 +22,7 @@ public class RepositoryImpl implements Repository {
             if (dataBaseUser.login.equals(user.login) && dataBaseUser.password.equals(user.password)) {
 
                 System.out.println("Login!!!");
+                userSaved = dataBaseUser;
                 return Login_isSuccessful;
             } else {
 
@@ -48,6 +51,9 @@ public class RepositoryImpl implements Repository {
         }
     }
 
-
-
+    @Override
+    public Device sendGetDevices(String name) {
+        clientMapper.addHistory(userSaved);
+        return clientMapper.getDevices(name);
+    }
 }

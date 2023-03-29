@@ -1,11 +1,14 @@
 package ui.panel;
 
+import dataSourse.Device;
 import presentation.Presenter;
 import ui.componentsView.ComponentsView;
 import ui.componentsView.Graph;
 import ui.componentsView.MaterialButton;
 import ui.componentsView.MaterialButtonSlider;
+import ui.helperView.TextAnimator;
 import ui.main.MainApp;
+import ui.panel.interfacesPanel.CallbackTextAnimation;
 import ui.panel.interfacesPanel.InterfacePanel;
 import ui.panel.panelDetailsSlider.PanelDefault;
 
@@ -14,11 +17,15 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import static dataSourse.TypeModules.*;
 import static ui.main.MainApp.baseUrlImage;
 
-public class PanelAnalyticalData implements MouseListener , InterfacePanel {
+public class PanelAnalyticalData implements MouseListener , InterfacePanel , CallbackTextAnimation{
 
     private final JPanel panelAnalyticalData = new JPanel();
 
@@ -29,14 +36,16 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
     private final MaterialButtonSlider slideButton3 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide3.png",baseUrlImage +"buttonSlide3_pressed.png",151,30);
 
     private final JTextField searchData = new JTextField(15);
-
-    private final Font font = new Font("Verdana", Font.PLAIN, 15);
     private final Font fontAppName = new Font("Verdana", Font.PLAIN, 36);
 
     private final JLabel labelSearchData = new JLabel("введите наименование прибора для выполнения анализа:");
     private final JLabel appName = new JLabel("<html>Аналитический<br>модуль");
+    private final JLabel labelInfo = new JLabel("");
+
+    private final TextAnimator textAnimator = new TextAnimator();
 
     private final Presenter presenter;
+    private final ExecutorService service = Executors.newCachedThreadPool();
 
     private final int paddingStart = 20;
     private final int paddingTop = 30;
@@ -51,7 +60,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
         this.heightScreen = heightScreen;
 
         panelAnalyticalData.setLayout(null);
-        panelAnalyticalData.setBackground(MainApp.getRGBColor(230,230,254));
+        panelAnalyticalData.setBackground(MainApp.getRGBColor(240,240,254));
 
         createSearch();
         createLabelApp(widthScreen);
@@ -79,10 +88,17 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
 
         int searchDataWidth = 800;
         searchData.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        searchData.setFont(new Font("Verdana", Font.PLAIN, 14));
         addComponents(searchData, paddingStart,paddingTop, searchDataWidth,searchButtonHeight);
 
         int searchButtonWidth = 101;
         addComponents(searchButton, searchDataWidth + (paddingStart) ,paddingTop, searchButtonWidth,searchButtonHeight);
+
+        int labelInfoWidth = 300;
+        int labelInfoHeight = 30;
+        Font font = new Font("Verdana", Font.PLAIN, 15);
+        labelInfo.setFont(font);
+        addComponents(labelInfo, searchDataWidth + (2*paddingStart) + searchButtonWidth ,paddingTop, labelInfoWidth,labelInfoHeight);
 
         labelSearchData.setFont(font);
         addComponents(labelSearchData,(paddingStart),paddingTop + searchButtonHeight, searchDataWidth,searchButtonHeight);
@@ -129,27 +145,66 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel {
             slideButton3.selectButton(false);
             slideButton2.selectButton(false);
 
-            presenter.setPanelDetailModule(MODULES_Effectiveness);
+            if(presenter.device != null) {
+                presenter.setPanelDetailModule(MODULES_Effectiveness);
+            }
         }
         if(event.getSource() == slideButton2) {
             slideButton1.selectButton(false);
             slideButton3.selectButton(false);
 
-            presenter.setPanelDetailModule(MODULES_TechnicalSpecifications);
+            if(presenter.device != null) {
+                presenter.setPanelDetailModule(MODULES_TechnicalSpecifications);
+            }
         }
         if(event.getSource() == slideButton3) {
             slideButton1.selectButton(false);
             slideButton2.selectButton(false);
 
-            presenter.setPanelDetailModule(MODULES_LifeCycleModule);
+            if(presenter.device != null) {
+                presenter.setPanelDetailModule(MODULES_LifeCycleModule);
+            }
         }
         if(event.getSource() == searchButton) {
             slideButton1.selectButton(true);
             slideButton3.selectButton(false);
             slideButton2.selectButton(false);
 
-            presenter.setPanelDetailModule(MODULES_Effectiveness);
+            searchData.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+            String name = searchData.getText();
+            presenter.sendGetDevice(name);
         }
+    }
+
+    private void startTextAnimation(String mess, CallbackTextAnimation callbackTextAnimation, String color) {
+        service.submit(new Runnable() {
+            public void run() {
+                textAnimator.animationText(mess,callbackTextAnimation,color);
+            }
+        });
+    }
+
+    @Override
+    public void setTextInfoAnimation(String messAnimation,String color) {
+        labelInfo.setText("<html><font color='"+color+"'>" + messAnimation + "</font></html>");
+    }
+
+    public void nullDevices() {
+        String mess = "ошибка: устройство не найдено!";
+        String color = "red";
+
+        startTextAnimation(mess,this,color);
+        searchData.setBorder(new LineBorder(Color.RED, 1));
+
+        presenter.setPanelDetailModule(MODULES_Default);
+    }
+
+    public void devicesSuccessful() {
+        String mess = "устройство успешно найдено!";
+        String color = "green";
+
+        startTextAnimation(mess, this, color);
+        presenter.setPanelDetailModule(MODULES_Effectiveness);
     }
 
     @Override

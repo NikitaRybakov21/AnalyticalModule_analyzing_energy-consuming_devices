@@ -14,4 +14,5 @@ public interface InterfacePresenter {
     void restoreModule();
     void sendDataBaseAuthorization(String password, String login);
     void sendDataBaseRegistration(String password, String login);
+    void sendGetDevice(String name);
 }
