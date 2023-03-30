@@ -60,7 +60,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
 
     private void createTextField() {
         Font fontLabel = new Font("Verdana", Font.PLAIN, 11);
-        Font fontTextField = new Font("Verdana", Font.PLAIN, 15);
+        Font fontTextField = new Font("Verdana", Font.PLAIN, 17);
 
         textFieldPassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
         textFieldName.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
@@ -91,7 +91,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     private void createTextInfo() {
         Font fontInfo = new Font("Verdana", Font.PLAIN, 15);
         textInfo.setFont(fontInfo);
-        addComponent(0,6, textInfo,new Insets(30, 0, 0,0),2,0,GridBagConstraints.HORIZONTAL);
+        addComponent(0,6, textInfo,new Insets(30, 0, 0,0),2,0,GridBagConstraints.CENTER);
     }
 
     private void addComponent(int gridX, int gridY, Component component, Insets insets, int gridWidth, int height, int fill) {

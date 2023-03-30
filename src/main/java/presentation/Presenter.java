@@ -94,6 +94,9 @@ public class Presenter implements InterfacePresenter {
         });
     }
 
+ //   public Device device = new Device("dd","ddd","ddd");
+ //   private ArrayList<PowerDevice> listPowerSave  = GenRes.getArrayListPowerDevices() ;
+
     public Device device = null;
     private ArrayList<PowerDevice> listPowerSave;
 

@@ -7,10 +7,7 @@ import dataSourse.Device;
 import dataSourse.PowerDevice;
 import dataSourse.ResponseStatus;
 import dataSourse.User;
-import geniratorRes.GenRes;
-
 import java.util.ArrayList;
-import java.util.List;
 
 import static dataSourse.ResponseStatus.*;
 
@@ -61,7 +58,7 @@ public class RepositoryImpl implements Repository {
 
         Device device = clientMapper.getDevices(name);
 
-  /*      if (device != null) {
+      /*  if (device != null) {
             clientMapper.setDataPowerDevices(GenRes.getArrayListPowerDevices());
             System.out.println("ок set power");
         }*/

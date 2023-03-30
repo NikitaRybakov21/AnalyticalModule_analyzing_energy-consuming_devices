@@ -87,7 +87,7 @@ public class Graph extends JComponent {
             g2.drawString(String.valueOf((int)((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
         }
 
-        g2.setColor(Color.BLUE);
+        g2.setColor(Color.BLACK);
         g2.setFont(new Font("Verdana", Font.PLAIN, 25));
         g2.drawString("Y", XOY.x - padding/1.5f, y1.y);
         g2.drawString("X" , x1.x, XOY.y + padding/1.5f);

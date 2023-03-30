@@ -12,7 +12,7 @@ public class GenRes {
         arrayList.clear();
 
         //----------------------Lamp---------------------------//
-        int powerWat = 40;
+        int powerWat = 860;
         float c = 0;
 
         for (int i = 1; i < 150; i++) {
@@ -20,14 +20,14 @@ public class GenRes {
             int timeSec = 10*60 * i;
             float inputPower =  ((timeSec/(60f*60f)) * powerWat);
 
-            c += -0.001f;
-            float parameterRandomMAX = 18 + i * c;
-            float parameterRandomMIN = -18 + i * c;
+            c += -0.0003f;
+            float parameterRandomMAX = 7 + i * c;
+            float parameterRandomMIN = -7 + i * c;
 
             float randomP = (float) (Math.random() * (parameterRandomMAX - parameterRandomMIN) + parameterRandomMIN);
-            float powerEff = ((70f + randomP)*inputPower)/100f;
+            float powerEff = ((87f + randomP)*inputPower)/100f;
 
-            arrayList.add(new PowerDevice(100,timeSec, inputPower, powerEff));
+            arrayList.add(new PowerDevice(200,timeSec, inputPower, powerEff));
         }
         //-----------------------------------------------------//
 
