@@ -11,4 +11,5 @@ public interface Repository {
     Device sendGetDevices(String name, ArrayList<DevicesDeath> list);
     List<PowerDevice> getListPowerDevices(String id);
     ArrayList<DevicesDeath> getListSurviveDevices(String id);
+    ProductivityDevices getProductivityDevices(String id);
 }

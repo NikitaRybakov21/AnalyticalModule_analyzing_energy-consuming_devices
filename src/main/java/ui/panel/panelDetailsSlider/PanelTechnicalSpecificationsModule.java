@@ -3,9 +3,8 @@ package ui.panel.panelDetailsSlider;
 import dataSourse.DevicesDeath;
 import dataSourse.PointF;
 import dataSourse.PowerDevice;
-import mathematicalModels.KaplanMeierEstimator;
-import mathematicalModels.PairAB;
-import mathematicalModels.SumOfSquaredErrorsSSE;
+import dataSourse.ProductivityDevices;
+import mathematicalModels.*;
 import presentation.Presenter;
 import ui.componentsView.Graph;
 import ui.main.MainApp;
@@ -32,6 +31,19 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
 
         createHeader(presenter);
         createGraphUi(listDeath);
+        createLabelKPD(presenter);
+    }
+
+    private void createLabelKPD(Presenter presenter) {
+        String label = "";
+        if(presenter.productivityDevices != null) {
+           label = DegreeOfWear.getStringProductivityDevices(presenter.productivityDevices);
+        }
+
+        JLabel labelPowerInput = new JLabel(label);
+
+        labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 24));
+        addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createGraphUi(ArrayList<DevicesDeath> listDeath) {
@@ -40,12 +52,12 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
         KaplanMeierEstimator kaplanMeierEstimator = new KaplanMeierEstimator(listDeath);
 
         Graph graph = new Graph(x -> kaplanMeierEstimator.funSurviveKaplanMeier(x) * 1 ,listPoints,5,0.2f,50,60,0,70);
-        addComponent(0,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
+        addComponent(1,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
 
 
-        JLabel nameGraph = new JLabel(getStringDescriptionMethod());
+        JLabel nameGraph = new JLabel(getStringDescriptionMethod(kaplanMeierEstimator.getTimeLiveAVG()));
         nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
-        addComponent(0,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
+        addComponent(1,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createHeader(Presenter presenter) {
@@ -91,10 +103,12 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
     @Override
     public void actionPerformed(ActionEvent event) { }
 
-    private String getStringDescriptionMethod() {
-        return "<html>Оценка выживаймости устройтва.<br><br>" +
+    private String getStringDescriptionMethod(long timeLiveAVG) {
+        timeLiveAVG /= (60*60);
+        return  "<html>Оценка выживаймости устройтва.<br><br>" +
                 "Метод Каплана-Мейера<br>" +
                 "<font color='#708090'>Ось X -время наработки устройства в </font>( днях )<br>" +
-                "<font color='#708090'>Ось Y -функция выживаймости </font>( S(t) )";
+                "<font color='#708090'>Ось Y -функция выживаймости </font>( S(t) )<br>" +
+                "<font color='#708090'>средняя выживаемось устройства</font>( "+timeLiveAVG+" часов )<br>";
     }
 }

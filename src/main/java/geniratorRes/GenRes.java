@@ -14,7 +14,6 @@ public class GenRes {
 
     public static ArrayList<PowerDevice> getArrayListPowerDevices() {
         arrayList.clear();
-
         //----------------------InputOutPower---------------------------//
         int powerWat = 860;
         float c = 0;
@@ -24,7 +23,7 @@ public class GenRes {
             int timeSec = 10*60 * i;
             float inputPower =  ((timeSec/(60f*60f)) * powerWat);
 
-            c += -0.0003f;
+            c += -0.003f;
             float parameterRandomMAX = 7 + i * c;
             float parameterRandomMIN = -7 + i * c;
 
@@ -34,7 +33,6 @@ public class GenRes {
             arrayList.add(new PowerDevice(200,timeSec, inputPower, powerEff));
         }
         //-----------------------------------------------------//
-
         return  arrayList;
     }
 
@@ -44,9 +42,8 @@ public class GenRes {
         for (int j = 0; j < 100; j++) {
             arrayListDeath.add(new DevicesDeath(200,null));
         }
-
         //----------------------Survival---------------------------//
-        int timeSurvive = 45000;
+        int timeSurvive = 1500;
 
         for (int i = 1; i <= timeSurvive; i++) {
 
@@ -67,17 +64,6 @@ public class GenRes {
             }
         }
         //--------------------------------------------------------//
-
-        for (DevicesDeath devicesDeath : arrayListDeath) {
-
-            if(devicesDeath.timeDeath != null) {
-                System.out.println(Integer.parseInt(devicesDeath.timeDeath)/(60*60));
-            } else {
-                System.out.println("live");
-            }
-
-        }
         return arrayListDeath;
     }
-
 }

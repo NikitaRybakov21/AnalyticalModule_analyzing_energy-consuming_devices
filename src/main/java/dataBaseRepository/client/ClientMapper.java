@@ -1,9 +1,6 @@
 package dataBaseRepository.client;
 
-import dataSourse.Device;
-import dataSourse.DevicesDeath;
-import dataSourse.PowerDevice;
-import dataSourse.User;
+import dataSourse.*;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -178,5 +175,27 @@ public class ClientMapper implements InterfaceClientMapper{
             e.printStackTrace();
         }
         return listSurviveDevices;
+    }
+
+    @Override
+    public ProductivityDevices getProductivityDevices(String id) {
+        String query =  "SELECT * FROM productivity_devices WHERE iddevices = '"+id+"'";
+        ProductivityDevices productivityDevices = null;
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                productivityDevices = new ProductivityDevices(
+                       Integer.parseInt(rs.getString("iddevices")),
+                       Integer.parseInt(rs.getString("period_work")),
+                       Integer.parseInt(rs.getString("productivityfirst")),
+                       Integer.parseInt(rs.getString("productivitylast"))
+               );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return productivityDevices;
     }
 }

@@ -44,7 +44,7 @@ public class KaplanMeierEstimator {
                     if (deathTime == timeDeath) {
                         sumDeath++;
                     }
-                } else  {
+                } else {
                     sumLive++;
                 }
             }
@@ -57,5 +57,20 @@ public class KaplanMeierEstimator {
         }
 
        return pMulti;
+    }
+
+    public long getTimeLiveAVG() {
+        long sumTime = 0;
+        for (DevicesDeath devicesDeath : listDeath) {
+            System.out.println(Integer.parseInt(devicesDeath.timeDeath));
+            System.out.println(devicesDeath.timeDeath);
+
+            if (Integer.parseInt(devicesDeath.timeDeath) > 0) {
+                sumTime += Integer.parseInt(devicesDeath.timeDeath);
+            }
+        }
+        System.out.println(sumTime);
+
+        return sumTime/listDeath.size();
     }
 }

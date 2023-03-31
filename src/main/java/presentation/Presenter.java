@@ -95,6 +95,7 @@ public class Presenter implements InterfacePresenter {
     private ArrayList<DevicesDeath> listSurvivalDevices  = GenRes.getArrayListSurvivalDevices() ;*/
 
     public Device device = null;
+    public ProductivityDevices productivityDevices;
     private ArrayList<PowerDevice> listPowerSave;
     private ArrayList<DevicesDeath> listSurvivalDevices;
 
@@ -106,6 +107,7 @@ public class Presenter implements InterfacePresenter {
             if (device != null) {
                 listPowerSave = repository.getListPowerDevices(device.id);
                 listSurvivalDevices = repository.getListSurviveDevices(device.id);
+                productivityDevices = repository.getProductivityDevices(device.id);
 
                 SwingUtilities.invokeLater(panelAnalyticalData::devicesSuccessful);
             } else {

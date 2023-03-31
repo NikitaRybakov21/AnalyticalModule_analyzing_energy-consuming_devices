@@ -75,4 +75,9 @@ public class RepositoryImpl implements Repository {
     public ArrayList<DevicesDeath> getListSurviveDevices(String id) {
         return clientMapper.getListSurviveDevices(id);
     }
+
+    @Override
+    public ProductivityDevices getProductivityDevices(String id) {
+        return clientMapper.getProductivityDevices(id);
+    }
 }

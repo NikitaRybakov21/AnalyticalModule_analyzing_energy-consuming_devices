@@ -1,9 +1,6 @@
 package dataBaseRepository.client;
 
-import dataSourse.Device;
-import dataSourse.DevicesDeath;
-import dataSourse.PowerDevice;
-import dataSourse.User;
+import dataSourse.*;
 
 import java.util.ArrayList;
 
@@ -16,4 +13,5 @@ public interface InterfaceClientMapper {
     ArrayList<PowerDevice> getListPowerDevices(String id);
     void setDataDeathDevices(ArrayList<DevicesDeath> listDevicesDeath);
     ArrayList<DevicesDeath> getListSurviveDevices(String id);
+    ProductivityDevices getProductivityDevices(String id);
 }
