@@ -1,6 +1,7 @@
 package dataBaseRepository.client;
 
 import dataSourse.Device;
+import dataSourse.DevicesDeath;
 import dataSourse.PowerDevice;
 import dataSourse.User;
 
@@ -140,5 +141,42 @@ public class ClientMapper implements InterfaceClientMapper{
             e.printStackTrace();
         }
         return listPowerDevices;
+    }
+
+    @Override
+    public void setDataDeathDevices(ArrayList<DevicesDeath> listDevicesDeath) {
+        for (DevicesDeath deathTime : listDevicesDeath) {
+            String query = "INSERT INTO survive_devices (iddevices_model,timedeath) VALUES ('" + deathTime.id + "','" + deathTime.timeDeath + "');";
+
+            try {
+                PreparedStatement preparedStatement = connection.prepareStatement(query);
+                int rs = preparedStatement.executeUpdate();
+
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    @Override
+    public ArrayList<DevicesDeath> getListSurviveDevices(String id) {
+        ArrayList<DevicesDeath> listSurviveDevices = new ArrayList<>();
+        String query =  "SELECT * FROM survive_devices WHERE iddevices_model = '"+id+"'";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            while (rs.next()) {
+                listSurviveDevices.add(new DevicesDeath(
+                        Integer.parseInt(rs.getString("iddevices_model")),
+                        rs.getString("timedeath")
+                        )
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listSurviveDevices;
     }
 }

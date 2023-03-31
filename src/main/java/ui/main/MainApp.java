@@ -9,8 +9,8 @@ import java.awt.event.ComponentEvent;
 
 public class MainApp extends JFrame implements InterfaceMainApp {
 
-    public static final int sizeX = 2200;
-    public static final int sizeY = 1150;
+    public static final int sizeX = 2300;
+    public static final int sizeY = 1200;
 
     public static final String nameApp = "AnalyticalModule";
     public static final String baseUrlImage = "src/main/resources/images/";

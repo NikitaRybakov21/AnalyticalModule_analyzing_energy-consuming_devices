@@ -16,14 +16,14 @@ public class Graph extends JComponent {
     private final Point y1 = new Point(padding,padding);
     private final Point x1 = new Point(width - padding,height - padding);
 
-    private final int stepX = 29;
-    private final int stepY = 30;
+    private int stepX = 29;
+    private int stepY = 30;
 
-    private final float stepValueX = 1f;
-    private final float stepValueY = 10f;
+    private float stepValueX = 1f;
+    private float stepValueY = 10f;
 
-    private final int startX = 0;
-    private final int endX = 24 + 10;
+    private int startX = 0;
+    private int endX = 24 + 10;
 
     private double animatedX = startX;
 
@@ -31,7 +31,14 @@ public class Graph extends JComponent {
     private final CallBackFun callBackFun;
     private final ArrayList<PointF> listPoint;
 
-    public Graph(CallBackFun callbackFun, ArrayList<PointF> listPoint) {
+    public Graph(CallBackFun callbackFun, ArrayList<PointF> listPoint,float stepValueX,float stepValueY,int stepX,int stepY,int startX, int endX) {
+        this.stepValueY = stepValueY;
+        this.stepValueX = stepValueX;
+        this.stepX = stepX;
+        this.stepY = stepY;
+        this.startX = startX;
+        this.endX = endX;
+
         this.callBackFun = callbackFun;
         this.listPoint = listPoint;
     }
@@ -75,7 +82,11 @@ public class Graph extends JComponent {
             g2.drawLine(XOY.x + stepX*(i + 1), XOY.y + del, XOY.x + stepX*(i + 1), XOY.y - del);
             g2.setColor(Color.BLACK);
 
-            g2.drawString(String.valueOf((int)((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
+            if(stepValueX/((int)stepValueX) > 1) {
+                g2.drawString(String.valueOf(((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
+            } else  {
+                g2.drawString(String.valueOf( (int)((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
+            }
         }
 
         for (int i = 0; XOY.y - stepY*(i + 1) > y1.y; i++) {
@@ -84,7 +95,11 @@ public class Graph extends JComponent {
             g2.drawLine(XOY.x - del, XOY.y - stepY*(i + 1), XOY.x + del, XOY.y - stepY*(i + 1));
             g2.setColor(Color.BLACK);
 
-            g2.drawString(String.valueOf((int)((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
+            if(stepValueY/((int)stepValueY) > 1) {
+                g2.drawString(String.valueOf(((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
+            } else  {
+                g2.drawString(String.valueOf( (int) ((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
+            }
         }
 
         g2.setColor(Color.BLACK);
@@ -95,12 +110,12 @@ public class Graph extends JComponent {
     }
 
     private void drawGraph(Graphics2D g2) {
-        g2.setColor(MainApp.getRGBColor(50,50,255));
+        g2.setColor(MainApp.getRGBColor(0,0,255));
 
-        double stepFX = 0.02;
+        double stepFX = 0.08;
 
         double speedStartAnimation = 0.005f;
-        double speedAnimation = speedStartAnimation * (endX - animatedX + 3) ;
+        double speedAnimation = speedStartAnimation * (endX - animatedX + 30) ;
         animatedX += speedAnimation;
 
         double x = startX;

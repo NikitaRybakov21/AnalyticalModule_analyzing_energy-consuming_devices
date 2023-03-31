@@ -60,10 +60,9 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
 
     private void createTextField() {
         Font fontLabel = new Font("Verdana", Font.PLAIN, 11);
-        Font fontTextField = new Font("Verdana", Font.PLAIN, 17);
+        Font fontTextField = new Font("Verdana", Font.PLAIN, 16);
 
-        textFieldPassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
-        textFieldName.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        setBorderTextFields();
 
         JLabel labelName = new JLabel("логин");
         labelName.setFont(fontLabel);
@@ -74,6 +73,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
 
         JLabel labelPassword = new JLabel("пароль");
         labelPassword.setFont(fontLabel);
+
         textFieldPassword.setFont(fontTextField);
 
         addComponent(0,3, labelPassword,new Insets(14, 0, 0,0),2,0,GridBagConstraints.HORIZONTAL);
@@ -86,6 +86,20 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
 
         buttonLogin.addActionListener(this);
         buttonRegistration.addActionListener(this);
+    }
+
+    private void setBorderTextFields() {
+        textFieldPassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        textFieldName.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        textFieldName.setBorder(BorderFactory.createCompoundBorder(textFieldName.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
+        textFieldPassword.setBorder(BorderFactory.createCompoundBorder(textFieldName.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
+    }
+
+    private void setBorderTextFieldsError() {
+        textFieldPassword.setBorder(new LineBorder(Color.RED, 1));
+        textFieldName.setBorder(new LineBorder(Color.RED, 1));
+        textFieldName.setBorder(BorderFactory.createCompoundBorder(textFieldName.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
+        textFieldPassword.setBorder(BorderFactory.createCompoundBorder(textFieldName.getBorder(), BorderFactory.createEmptyBorder(0, 5, 0, 5)));
     }
 
     private void createTextInfo() {
@@ -114,8 +128,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
 
     @Override
     public void actionPerformed(ActionEvent event) {
-        textFieldPassword.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
-        textFieldName.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
+        setBorderTextFields();
 
         String password = textFieldPassword.getText();
         String login = textFieldName.getText();
@@ -125,7 +138,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
                 presenter.sendDataBaseAuthorization(password, login);
             } else {
                 notValidError();
-               // loginSuccessful();
+             //   loginSuccessful();
             }
         }
 
@@ -156,8 +169,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
         String color = "red";
 
         startTextAnimation(mess,this,color);
-        textFieldPassword.setBorder(new LineBorder(Color.RED, 1));
-        textFieldName.setBorder(new LineBorder(Color.RED, 1));
+        setBorderTextFieldsError();
     }
 
     public void registrationSuccessful() {

@@ -3,10 +3,9 @@ package dataBaseRepository.repository;
 import dataBaseRepository.client.ClientMapper;
 import dataBaseRepository.connect.ConnectDataBase;
 import dataBaseRepository.interfaces.Repository;
-import dataSourse.Device;
-import dataSourse.PowerDevice;
-import dataSourse.ResponseStatus;
-import dataSourse.User;
+import dataSourse.*;
+import geniratorRes.GenRes;
+
 import java.util.ArrayList;
 
 import static dataSourse.ResponseStatus.*;
@@ -54,13 +53,13 @@ public class RepositoryImpl implements Repository {
     }
 
     @Override
-    public Device sendGetDevices(String name) {
+    public Device sendGetDevices(String name, ArrayList<DevicesDeath> list) {
 
         Device device = clientMapper.getDevices(name);
 
-      /*  if (device != null) {
-            clientMapper.setDataPowerDevices(GenRes.getArrayListPowerDevices());
-            System.out.println("ок set power");
+  /*      if (device != null) {
+            clientMapper.setDataDeathDevices(list);
+            System.out.println("ок set");
         }*/
 
         clientMapper.addHistory(userSaved);
@@ -70,5 +69,10 @@ public class RepositoryImpl implements Repository {
     @Override
     public ArrayList<PowerDevice> getListPowerDevices(String id) {
         return clientMapper.getListPowerDevices(id);
+    }
+
+    @Override
+    public ArrayList<DevicesDeath> getListSurviveDevices(String id) {
+        return clientMapper.getListSurviveDevices(id);
     }
 }

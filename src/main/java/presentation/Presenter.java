@@ -1,12 +1,8 @@
 package presentation;
 
 import dataBaseRepository.repository.RepositoryImpl;
-import dataSourse.Device;
-import dataSourse.ResponseStatus;
-import dataSourse.TypeModules;
-import dataSourse.User;
+import dataSourse.*;
 import geniratorRes.GenRes;
-import dataSourse.PowerDevice;
 import ui.main.MainApp;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
@@ -51,7 +47,7 @@ public class Presenter implements InterfacePresenter {
     public void setPanelDetailModule(TypeModules typeModules) {
         switch (typeModules) {
             case MODULES_Effectiveness -> panelModule = new PanelEffectivenessModule(this,listPowerSave).getPanel();
-            case MODULES_TechnicalSpecifications -> panelModule = new PanelTechnicalSpecificationsModule(this).getPanel();
+            case MODULES_TechnicalSpecifications -> panelModule = new PanelTechnicalSpecificationsModule(this, listSurvivalDevices).getPanel();
             case MODULES_LifeCycleModule -> panelModule = new PanelLifeCycleModule(this).getPanel();
             case MODULES_Default -> panelModule = new PanelDefault(this).getPanel();
         }
@@ -94,19 +90,23 @@ public class Presenter implements InterfacePresenter {
         });
     }
 
- //   public Device device = new Device("dd","ddd","ddd");
- //   private ArrayList<PowerDevice> listPowerSave  = GenRes.getArrayListPowerDevices() ;
+  /*  public Device device = new Device("dd","ddd","ddd");
+    private ArrayList<PowerDevice> listPowerSave  = GenRes.getArrayListPowerDevices() ;
+    private ArrayList<DevicesDeath> listSurvivalDevices  = GenRes.getArrayListSurvivalDevices() ;*/
 
     public Device device = null;
     private ArrayList<PowerDevice> listPowerSave;
+    private ArrayList<DevicesDeath> listSurvivalDevices;
 
     @Override
     public void sendGetDeviceToAnalytical(String name) {
         service.submit(() -> {
-            device = repository.sendGetDevices(name);
+            device = repository.sendGetDevices(name,listSurvivalDevices);
 
             if (device != null) {
                 listPowerSave = repository.getListPowerDevices(device.id);
+                listSurvivalDevices = repository.getListSurviveDevices(device.id);
+
                 SwingUtilities.invokeLater(panelAnalyticalData::devicesSuccessful);
             } else {
                 SwingUtilities.invokeLater(panelAnalyticalData::nullDevices);

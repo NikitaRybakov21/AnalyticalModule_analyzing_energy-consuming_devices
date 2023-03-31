@@ -1,17 +1,21 @@
 package geniratorRes;
 
+import dataSourse.DevicesDeath;
 import dataSourse.PowerDevice;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class GenRes {
 
     private static final ArrayList<PowerDevice> arrayList = new ArrayList<>();
+    private static final ArrayList<DevicesDeath> arrayListDeath = new ArrayList<>();
+    private static final Random random = new Random();
 
     public static ArrayList<PowerDevice> getArrayListPowerDevices() {
         arrayList.clear();
 
-        //----------------------Lamp---------------------------//
+        //----------------------InputOutPower---------------------------//
         int powerWat = 860;
         float c = 0;
 
@@ -32,6 +36,48 @@ public class GenRes {
         //-----------------------------------------------------//
 
         return  arrayList;
+    }
+
+    public static ArrayList<DevicesDeath> getArrayListSurvivalDevices() {
+        arrayListDeath.clear();
+
+        for (int j = 0; j < 100; j++) {
+            arrayListDeath.add(new DevicesDeath(200,null));
+        }
+
+        //----------------------Survival---------------------------//
+        int timeSurvive = 45000;
+
+        for (int i = 1; i <= timeSurvive; i++) {
+
+            int timeSec = 60*60 * i;
+
+            for (DevicesDeath devicesDeath : arrayListDeath) {
+
+                if (timeSec > timeSurvive*60*60) {
+                    timeSec = timeSurvive*60*60;
+                }
+                float c = 2f;
+
+                if (random.nextInt((int) (c*timeSurvive - c*(timeSec/(60f*60f)) + 1f)) == 0) {
+                    if (devicesDeath.timeDeath == null) {
+                        devicesDeath.timeDeath = Integer.toString(timeSec);
+                    }
+                }
+            }
+        }
+        //--------------------------------------------------------//
+
+        for (DevicesDeath devicesDeath : arrayListDeath) {
+
+            if(devicesDeath.timeDeath != null) {
+                System.out.println(Integer.parseInt(devicesDeath.timeDeath)/(60*60));
+            } else {
+                System.out.println("live");
+            }
+
+        }
+        return arrayListDeath;
     }
 
 }

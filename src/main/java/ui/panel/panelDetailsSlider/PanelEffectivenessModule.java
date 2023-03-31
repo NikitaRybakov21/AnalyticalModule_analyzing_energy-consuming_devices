@@ -14,7 +14,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
-import static java.lang.Math.sin;
 
 public class PanelEffectivenessModule implements ActionListener , InterfacePanel {
 
@@ -40,25 +39,19 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
         PairAB pairAB = SumOfSquaredErrorsSSE.sse(listPoints);
         double a = pairAB.a;
         double b = pairAB.b;
-        Graph graph = new Graph( x -> a * x + b,listPoints);
 
+        Graph graph = new Graph( x -> a * x + b,listPoints,1f,10f,29,30,0,24+10);
         addComponent(1,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
 
-        JLabel nameGraph = new JLabel(
-                "<html>Регрессионный анализ эффективности.<br>" + "<br>" +
-                "<font color='#708090'>Ось X -время работы устройтова в </font>( часах )<br>" +
-                "<font color='#708090'>Ось Y -КПД устройства в </font>( % )<br>" +
-                "<font color='#708090'>регрессионная прямая </font>y="+String.format("%.2f", a)+"*x+"+String.format("%.2f", b)+"</html>"
-        );
-
+        JLabel nameGraph = new JLabel(getStringDescriptionMethod(a,b));
         nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
         addComponent(1,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createHeader(Presenter presenter) {
         JLabel label = new JLabel("Эффективность потребления устройства");
-        Font fontHeader = new Font("Verdana", Font.PLAIN, 40);
-        label.setFont(fontHeader);
+        label.setFont(new Font("Verdana", Font.PLAIN, 40));
+
         addComponent(0,0, label,new Insets(0, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
 
         String nameDevices = "";
@@ -73,7 +66,7 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
 
     private void createLabelKPD(String power) {
         JLabel labelPowerInput = new JLabel(CalculationOfEfficiency.calculationKpd(listPower,power));
-        labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 28));
+        labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 24));
 
         addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
     }
@@ -113,4 +106,11 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
 
     @Override
     public void actionPerformed(ActionEvent event) { }
+
+    private String getStringDescriptionMethod(double a,double b) {
+        return "<html>Регрессионный анализ эффективности.<br><br>Метод наименьших общих квадратов" + "<br>" +
+                "<font color='#708090'>Ось X -время работы устройства в </font>( часах )<br>" +
+                "<font color='#708090'>Ось Y -КПД устройства в </font>( % )<br>" +
+                "<font color='#708090'>регрессионная прямая </font>y="+String.format("%.2f", a)+"*x+"+String.format("%.2f", b)+"</html>";
+    }
 }

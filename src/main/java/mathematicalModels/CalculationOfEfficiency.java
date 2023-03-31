@@ -17,7 +17,8 @@ public class CalculationOfEfficiency {
         }
         float valueKpd = (((float) sumEffPower/sumInputPower)*100f);
         String kpd = String.format("%.2f", valueKpd);
-        return "<html>" + "<font color='#708090'>Исходная мощность устройства: </font>"+power+" ватт<br><br>" +
+        return "<html>"+"Расчёт среднего значения КПД.<br><br>" +
+                "<font color='#708090'>Исходная мощность устройства: </font>"+power+" ватт<br><br>" +
                 "<font color='#708090'>Oбщая потребляемая мощность: </font>"+sumInputPower+" ватт<br>" +
                 "<font color='#708090'>Oбщая производимая полезная мощность: </font>"+sumEffPower+" ватт<br>" +
                 "<font color='#708090'>Oбщее время работы: </font>"+timeSum+" cек<br>  <br>" +
