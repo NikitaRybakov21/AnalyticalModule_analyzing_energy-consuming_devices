@@ -6,6 +6,7 @@ import dataSourse.PowerDevice;
 import dataSourse.ProductivityDevices;
 import mathematicalModels.*;
 import presentation.Presenter;
+import ui.componentsView.FunColorX;
 import ui.componentsView.Graph;
 import ui.main.MainApp;
 import ui.panel.interfacesPanel.InterfacePanel;
@@ -29,50 +30,53 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
         panelTechnicalSpecificationsModule.setBackground(MainApp.getRGBColor(254,254,254));
         panelTechnicalSpecificationsModule.setLayout(gridBagLayout);
 
+        KaplanMeierEstimator kaplanMeierEstimator = new KaplanMeierEstimator(listDeath);
+
         createHeader(presenter);
-        createGraphUi(listDeath);
-        createLabelKPD(presenter);
+        createGraphUi(kaplanMeierEstimator);
+        createDescriptionGraphUi(kaplanMeierEstimator);
+        createLabelProductivityDevices(presenter);
     }
 
-    private void createLabelKPD(Presenter presenter) {
+    private void createLabelProductivityDevices(Presenter presenter) {
         String label = "";
         if(presenter.productivityDevices != null) {
            label = DegreeOfWear.getStringProductivityDevices(presenter.productivityDevices);
         }
 
         JLabel labelPowerInput = new JLabel(label);
-
         labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 24));
+
         addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
     }
 
-    private void createGraphUi(ArrayList<DevicesDeath> listDeath) {
-        ArrayList<PointF> listPoints = getListPoints();
+    private void createGraphUi(KaplanMeierEstimator kaplanMeierEstimator) {
+        ArrayList<FunColorX> functions = new ArrayList<>();
+        functions.add(new FunColorX(x -> kaplanMeierEstimator.funSurviveKaplanMeier(x) * 1 ,MainApp.getRGBColor(255,100,100)));
 
-        KaplanMeierEstimator kaplanMeierEstimator = new KaplanMeierEstimator(listDeath);
-
-        Graph graph = new Graph(x -> kaplanMeierEstimator.funSurviveKaplanMeier(x) * 1 ,listPoints,5,0.2f,50,60,0,70);
+        Graph graph = new Graph(functions,null,5,0.2f,50,60,0,70, new Dimension(800,400));
         addComponent(1,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
+    }
 
-
+    private void createDescriptionGraphUi(KaplanMeierEstimator kaplanMeierEstimator) {
         JLabel nameGraph = new JLabel(getStringDescriptionMethod(kaplanMeierEstimator.getTimeLiveAVG()));
+
         nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
         addComponent(1,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createHeader(Presenter presenter) {
-        JLabel label = new JLabel("Характеристики надёжности устройтва");
-        label.setFont(new Font("Verdana", Font.PLAIN, 40));
-
-        addComponent(0,0, label,new Insets(0, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
-
         String nameDevices = "";
         if(presenter.device != null) {
             nameDevices = presenter.device.name;
         }
 
+        JLabel label = new JLabel("Характеристики надёжности устройтва");
         JLabel labelNameDevices = new JLabel("<html>оборудование: <font color='green'>" + nameDevices + "</font></html>");
         labelNameDevices.setFont(new Font("Verdana", Font.BOLD, 18));
+        label.setFont(new Font("Verdana", Font.PLAIN, 40));
+
+        addComponent(0,0, label,new Insets(0, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
         addComponent(0,1, labelNameDevices,new Insets(15, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
     }
 
@@ -93,10 +97,6 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
         panelTechnicalSpecificationsModule.add(component);
     }
 
-    private ArrayList<PointF> getListPoints() {
-        return new ArrayList<>();
-    }
-
     @Override
     public JPanel getPanel() { return panelTechnicalSpecificationsModule; }
 
@@ -105,10 +105,10 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
 
     private String getStringDescriptionMethod(long timeLiveAVG) {
         timeLiveAVG /= (60*60);
-        return  "<html>Оценка выживаймости устройтва.<br><br>" +
-                "Метод Каплана-Мейера<br>" +
-                "<font color='#708090'>Ось X -время наработки устройства в </font>( днях )<br>" +
-                "<font color='#708090'>Ось Y -функция выживаймости </font>( S(t) )<br>" +
-                "<font color='#708090'>средняя выживаемось устройства</font>( "+timeLiveAVG+" часов )<br>";
+        return  "<html>Оценка выживаймости устройтва.<br>" +
+                "Оценка Каплана-Мейера.<br><br>" +
+                "<font color='#708090'>Ось X -время наработки устройства в: </font> днях <br>" +
+                "<font color='#708090'>Ось Y -функция выживаймости: </font> S(t) <br>" +
+                "<font color='#708090'>средняя выживаемось устройства</font>: "+timeLiveAVG+" часов <br>";
     }
 }

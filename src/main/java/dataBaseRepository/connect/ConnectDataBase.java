@@ -1,6 +1,6 @@
 package dataBaseRepository.connect;
 
-import dataBaseRepository.client.ClientMapper;
+import dataBaseRepository.client.Client;
 
 import java.sql.*;
 
@@ -15,8 +15,8 @@ public class ConnectDataBase {
 
     private static Connection connection;
 
-    public static ClientMapper getConnect() {
-        ClientMapper clientMapper = null;
+    public static Client getConnect() {
+        Client clientMapper = null;
 
         try {
             String url = "jdbc:postgresql://" + HOST + ":" + PORT + "/" + DATA_BASE_NAME;
@@ -24,7 +24,7 @@ public class ConnectDataBase {
             connection = DriverManager.getConnection(url, user, password);
             System.out.println("Connection to the " + DATA_BASE_NAME + " database is successful");
 
-            clientMapper = new ClientMapper(connection);
+            clientMapper = new Client(connection);
 
         } catch (SQLException e) {
             e.printStackTrace();

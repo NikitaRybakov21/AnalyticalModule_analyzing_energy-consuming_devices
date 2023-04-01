@@ -13,9 +13,7 @@ public class KaplanMeierEstimator {
     }
 
     public float funSurviveKaplanMeier(double t) {
-
         double timeSecond = t * 24 * 60 * 60;
-
         ArrayList<Integer> timeDeathList = new ArrayList<>();
 
         for (DevicesDeath devicesDeath : listDeath) {
@@ -55,22 +53,22 @@ public class KaplanMeierEstimator {
                 pMulti *= 0f;
             }
         }
-
        return pMulti;
     }
 
     public long getTimeLiveAVG() {
         long sumTime = 0;
         for (DevicesDeath devicesDeath : listDeath) {
-            System.out.println(Integer.parseInt(devicesDeath.timeDeath));
-            System.out.println(devicesDeath.timeDeath);
 
             if (Integer.parseInt(devicesDeath.timeDeath) > 0) {
                 sumTime += Integer.parseInt(devicesDeath.timeDeath);
             }
         }
-        System.out.println(sumTime);
 
-        return sumTime/listDeath.size();
+        if (listDeath.size() != 0) {
+            return sumTime/listDeath.size();
+        } else {
+            return sumTime;
+        }
     }
 }

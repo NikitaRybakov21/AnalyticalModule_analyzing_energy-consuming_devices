@@ -1,6 +1,6 @@
 package ui.main;
 
-import geniratorRes.GenRes;
+import geniratorRes.GenerateData;
 import presentation.Presenter;
 import javax.swing.*;
 import java.awt.*;
@@ -16,7 +16,7 @@ public class MainApp extends JFrame implements InterfaceMainApp {
     public static final String baseUrlImage = "src/main/resources/images/";
 
     public static void main(String[] args) {
-        GenRes.getArrayListPowerDevices();
+        GenerateData.getArrayListPowerDevices();
         new MainApp(nameApp , sizeX ,sizeY);
     }
 

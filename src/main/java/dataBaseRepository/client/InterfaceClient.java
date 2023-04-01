@@ -4,7 +4,7 @@ import dataSourse.*;
 
 import java.util.ArrayList;
 
-public interface InterfaceClientMapper {
+public interface InterfaceClient {
     User getUser(User user);
     User addUser(User user);
     Device getDevices(String name);
@@ -14,4 +14,5 @@ public interface InterfaceClientMapper {
     void setDataDeathDevices(ArrayList<DevicesDeath> listDevicesDeath);
     ArrayList<DevicesDeath> getListSurviveDevices(String id);
     ProductivityDevices getProductivityDevices(String id);
+    PlanningPeriod getPlaningPeriod(String id);
 }

@@ -9,13 +9,12 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
-public class ClientMapper implements InterfaceClientMapper{
+public class Client implements InterfaceClient {
 
     Connection connection;
 
-    public ClientMapper(Connection connection){
+    public Client(Connection connection){
         this.connection = connection;
     }
 
@@ -29,10 +28,7 @@ public class ClientMapper implements InterfaceClientMapper{
             ResultSet rs = preparedStatement.executeQuery();
 
             if(rs.next()) {
-                System.out.println(rs.getRow() + "  select user  " + rs.getString("name") + "\t");
                 dataBaseUser = new User(rs.getString("name"),rs.getString("password"));
-            } else {
-                System.out.println("select user NULL");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -52,10 +48,6 @@ public class ClientMapper implements InterfaceClientMapper{
                 int rs = preparedStatement.executeUpdate();
 
                 newDataBaseUser = user;
-
-                System.out.println("select user added");
-            } else {
-                System.out.println("select user already exists");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -74,10 +66,7 @@ public class ClientMapper implements InterfaceClientMapper{
             ResultSet rs = preparedStatement.executeQuery();
 
             if(rs.next()) {
-                System.out.println(rs.getRow() + "  device  " + rs.getString("name") +"  "+ rs.getString("iddevices") + "\t");
                 deviceDB = new Device(rs.getString("name"),rs.getString("iddevices"),rs.getString("power"));
-            } else {
-                System.out.println("device NULL");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -95,7 +84,6 @@ public class ClientMapper implements InterfaceClientMapper{
             PreparedStatement preparedStatement = connection.prepareStatement(query);
             int rs = preparedStatement.executeUpdate();
 
-            System.out.println("user added send history");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -197,5 +185,28 @@ public class ClientMapper implements InterfaceClientMapper{
             e.printStackTrace();
         }
         return productivityDevices;
+    }
+
+    @Override
+    public PlanningPeriod getPlaningPeriod(String id) {
+        String query =  "SELECT * FROM planning_period WHERE iddevices_model = '"+id+"'";
+        PlanningPeriod planningPeriod = null;
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            ResultSet rs = preparedStatement.executeQuery();
+
+            if (rs.next()) {
+                planningPeriod = new PlanningPeriod(
+                        Float.parseFloat(rs.getString("requirement_periodD")),
+                        Float.parseFloat(rs.getString("order_costsK")),
+                        Float.parseFloat(rs.getString("storage_costH")),
+                        Integer.parseInt(rs.getString("planning_periodT"))
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return planningPeriod;
     }
 }

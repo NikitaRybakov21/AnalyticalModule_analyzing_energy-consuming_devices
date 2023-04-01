@@ -2,7 +2,9 @@ package presentation;
 
 import dataBaseRepository.repository.RepositoryImpl;
 import dataSourse.*;
-import geniratorRes.GenRes;
+import dataSourse.constValue.ResponseStatus;
+import dataSourse.constValue.TypeModules;
+import geniratorRes.GenerateData;
 import ui.main.MainApp;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
@@ -48,7 +50,7 @@ public class Presenter implements InterfacePresenter {
         switch (typeModules) {
             case MODULES_Effectiveness -> panelModule = new PanelEffectivenessModule(this,listPowerSave).getPanel();
             case MODULES_TechnicalSpecifications -> panelModule = new PanelTechnicalSpecificationsModule(this, listSurvivalDevices).getPanel();
-            case MODULES_LifeCycleModule -> panelModule = new PanelLifeCycleModule(this).getPanel();
+            case MODULES_LifeCycleModule -> panelModule = new PanelLifeCycleModule(this,planningPeriod).getPanel();
             case MODULES_Default -> panelModule = new PanelDefault(this).getPanel();
         }
 
@@ -90,14 +92,17 @@ public class Presenter implements InterfacePresenter {
         });
     }
 
-  /*  public Device device = new Device("dd","ddd","ddd");
-    private ArrayList<PowerDevice> listPowerSave  = GenRes.getArrayListPowerDevices() ;
-    private ArrayList<DevicesDeath> listSurvivalDevices  = GenRes.getArrayListSurvivalDevices() ;*/
+ /*  public Device device = new Device("dd","ddd","ddd");
+     public ProductivityDevices productivityDevices = new ProductivityDevices(5,754,4005,524);
+     public PlanningPeriod planningPeriod = new PlanningPeriod(0.1f*365f,1,0.8f,365);
+     private ArrayList<PowerDevice> listPowerSave  = GenerateData.getArrayListPowerDevices() ;
+     private ArrayList<DevicesDeath> listSurvivalDevices  = GenerateData.getArrayListSurvivalDevices() ;*/
 
     public Device device = null;
     public ProductivityDevices productivityDevices;
     private ArrayList<PowerDevice> listPowerSave;
     private ArrayList<DevicesDeath> listSurvivalDevices;
+    public PlanningPeriod planningPeriod;
 
     @Override
     public void sendGetDeviceToAnalytical(String name) {
@@ -108,6 +113,7 @@ public class Presenter implements InterfacePresenter {
                 listPowerSave = repository.getListPowerDevices(device.id);
                 listSurvivalDevices = repository.getListSurviveDevices(device.id);
                 productivityDevices = repository.getProductivityDevices(device.id);
+                planningPeriod = repository.getPlanningPeriod(device.id);
 
                 SwingUtilities.invokeLater(panelAnalyticalData::devicesSuccessful);
             } else {

@@ -19,11 +19,7 @@ import static ui.main.MainApp.baseUrlImage;
 public class PanelAuthorization implements ActionListener , InterfacePanel , CallbackTextAnimation {
 
     private final JPanel panelAuthorization = new JPanel();
-
     private final GridBagLayout gridBagLayout = new GridBagLayout();
-
-    private final JTextField textFieldPatronymic = new JTextField(15);
-    private final JTextField textFieldSurname = new JTextField(15);
 
     private final MaterialButton buttonLogin = new MaterialButton("Test", baseUrlImage + "buttonLogin.png",baseUrlImage + "buttonLogin_pressed.png",338/2,114/2);
     private final MaterialButton buttonRegistration = new MaterialButton("Test", baseUrlImage + "buttonRegistration.png", baseUrlImage + "buttonRegistration_pressed.png", 338/2, 114/2);
@@ -52,9 +48,8 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
     }
 
     private void createHeader() {
-        Font fontHeader = new Font("Verdana", Font.PLAIN, 28);
         JLabel labelAuthorization = new JLabel("Авторизаци пользователя");
-        labelAuthorization.setFont(fontHeader);
+        labelAuthorization.setFont(new Font("Verdana", Font.PLAIN, 28));
         addComponent(0,0, labelAuthorization,new Insets(0, 0, 0,0),2,0,GridBagConstraints.CENTER);
     }
 
@@ -138,7 +133,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
                 presenter.sendDataBaseAuthorization(password, login);
             } else {
                 notValidError();
-             //   loginSuccessful();
+              //  loginSuccessful();
             }
         }
 

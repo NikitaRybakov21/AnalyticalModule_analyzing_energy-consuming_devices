@@ -1,18 +1,16 @@
 package dataBaseRepository.repository;
 
-import dataBaseRepository.client.ClientMapper;
+import dataBaseRepository.client.Client;
 import dataBaseRepository.connect.ConnectDataBase;
-import dataBaseRepository.interfaces.Repository;
 import dataSourse.*;
-import geniratorRes.GenRes;
+import dataSourse.constValue.ResponseStatus;
 
 import java.util.ArrayList;
+import static dataSourse.constValue.ResponseStatus.*;
 
-import static dataSourse.ResponseStatus.*;
+public class RepositoryImpl implements InterfaceRepository {
 
-public class RepositoryImpl implements Repository {
-
-    private final ClientMapper clientMapper = ConnectDataBase.getConnect();
+    private final Client clientMapper = ConnectDataBase.getConnect();
     private User userSaved;
 
     @Override
@@ -21,18 +19,12 @@ public class RepositoryImpl implements Repository {
 
         if(dataBaseUser != null) {
             if (dataBaseUser.login.equals(user.login) && dataBaseUser.password.equals(user.password)) {
-
-                System.out.println("Login!!!");
                 userSaved = dataBaseUser;
                 return Login_isSuccessful;
             } else {
-
-                System.out.println("ERROR!!!");
                 return Login_Error;
             }
         } else {
-
-            System.out.println("ERROR!!!");
             return Login_Error;
         }
     }
@@ -42,12 +34,8 @@ public class RepositoryImpl implements Repository {
         User newDataBaseUser = clientMapper.addUser(user);
 
         if(newDataBaseUser != null) {
-
-            System.out.println("Registration successful");
             return Registration_isSuccessful;
         } else {
-
-            System.out.println("Registration error");
             return Registration_Error;
         }
     }
@@ -57,7 +45,7 @@ public class RepositoryImpl implements Repository {
 
         Device device = clientMapper.getDevices(name);
 
-  /*      if (device != null) {
+  /*   if (device != null) {
             clientMapper.setDataDeathDevices(list);
             System.out.println("ок set");
         }*/
@@ -80,4 +68,7 @@ public class RepositoryImpl implements Repository {
     public ProductivityDevices getProductivityDevices(String id) {
         return clientMapper.getProductivityDevices(id);
     }
+
+    @Override
+    public PlanningPeriod getPlanningPeriod(String id) { return clientMapper.getPlaningPeriod(id); }
 }

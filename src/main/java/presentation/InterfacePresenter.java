@@ -1,6 +1,6 @@
 package presentation;
 
-import dataSourse.TypeModules;
+import dataSourse.constValue.TypeModules;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
 

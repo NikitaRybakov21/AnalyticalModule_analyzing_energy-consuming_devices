@@ -8,30 +8,30 @@ import java.util.ArrayList;
 
 public class Graph extends JComponent {
 
-    private final int width = 800;
-    private final int height = 400;
+    private int width = 800;
+    private int height = 400;
 
     private final int padding = 40;
-    private final Point XOY = new Point(padding,height - padding);
-    private final Point y1 = new Point(padding,padding);
-    private final Point x1 = new Point(width - padding,height - padding);
+    private final Point XOY;
+    private final Point y1;
+    private final Point x1;
 
-    private int stepX = 29;
-    private int stepY = 30;
+    private final int stepX;
+    private final int stepY;
 
-    private float stepValueX = 1f;
-    private float stepValueY = 10f;
+    private final float stepValueX;
+    private final float stepValueY;
 
-    private int startX = 0;
-    private int endX = 24 + 10;
+    private int startX;
+    private final int endX;
 
     private double animatedX = startX;
 
     private final Font font = new Font("Verdana", Font.PLAIN, 15);
-    private final CallBackFun callBackFun;
+    private final ArrayList<FunColorX> listFunction;
     private final ArrayList<PointF> listPoint;
 
-    public Graph(CallBackFun callbackFun, ArrayList<PointF> listPoint,float stepValueX,float stepValueY,int stepX,int stepY,int startX, int endX) {
+    public Graph(ArrayList<FunColorX> listFunction, ArrayList<PointF> listPoint,float stepValueX,float stepValueY,int stepX,int stepY,int startX, int endX,Dimension dimension) {
         this.stepValueY = stepValueY;
         this.stepValueX = stepValueX;
         this.stepX = stepX;
@@ -39,8 +39,15 @@ public class Graph extends JComponent {
         this.startX = startX;
         this.endX = endX;
 
-        this.callBackFun = callbackFun;
+        this.width = dimension.width;
+        this.height = dimension.height;
+
+        this.listFunction = listFunction;
         this.listPoint = listPoint;
+
+        this.XOY = new Point(padding,height - padding);
+        this.y1 = new Point(padding,padding);
+        this.x1 = new Point(width - padding,height - padding);
     }
 
     @Override
@@ -73,6 +80,16 @@ public class Graph extends JComponent {
         g2.drawLine(XOY.x, XOY.y, y1.x, y1.y);
         g2.drawLine(XOY.x, XOY.y, x1.x, x1.y);
 
+        divisions(g2);
+
+        g2.setColor(Color.BLACK);
+        g2.setFont(new Font("Verdana", Font.PLAIN, 25));
+        g2.drawString("Y", XOY.x - padding/1.5f, y1.y);
+        g2.drawString("X" , x1.x, XOY.y + padding/1.5f);
+        g2.setFont(font);
+    }
+
+    private void divisions(Graphics2D g2) {
         g2.setStroke(new BasicStroke(2));
 
         int del = 10;
@@ -85,7 +102,7 @@ public class Graph extends JComponent {
             if(stepValueX/((int)stepValueX) > 1) {
                 g2.drawString(String.valueOf(((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
             } else  {
-                g2.drawString(String.valueOf( (int)((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
+                g2.drawString(String.valueOf((int)((i+1)*stepValueX )) , XOY.x + stepX*(i + 1), XOY.y + padding/1.5f);
             }
         }
 
@@ -98,20 +115,12 @@ public class Graph extends JComponent {
             if(stepValueY/((int)stepValueY) > 1) {
                 g2.drawString(String.valueOf(((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
             } else  {
-                g2.drawString(String.valueOf( (int) ((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
+                g2.drawString(String.valueOf((int)((i+1)*stepValueY)), XOY.x - padding/1.2f, XOY.y - stepY*(i + 1));
             }
         }
-
-        g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Verdana", Font.PLAIN, 25));
-        g2.drawString("Y", XOY.x - padding/1.5f, y1.y);
-        g2.drawString("X" , x1.x, XOY.y + padding/1.5f);
-        g2.setFont(font);
     }
 
     private void drawGraph(Graphics2D g2) {
-        g2.setColor(MainApp.getRGBColor(0,0,255));
-
         double stepFX = 0.08;
 
         double speedStartAnimation = 0.005f;
@@ -120,14 +129,18 @@ public class Graph extends JComponent {
 
         double x = startX;
         while (x < animatedX) {
+            if(listFunction != null) {
+                for (FunColorX function : listFunction) {
+                    double fx = function.callBackFun.getValueFunX(x);
+                    g2.setColor(function.color);
 
-            double fx = callBackFun.getValueFunX(x);
+                    int gx = (int) (x * stepX * (1f / stepValueX) + XOY.x);
+                    int gy = (int) (XOY.y - fx * stepY * (1f / stepValueY));
 
-            int gx = (int) (x * stepX * (1f/stepValueX)   + XOY.x);
-            int gy = (int) (XOY.y - fx * stepY * (1f/stepValueY) );
-
-            if(gx < width) {
-                g2.drawLine(gx, gy, gx, gy);
+                    if (gx < width) {
+                        g2.drawLine(gx, gy, gx, gy);
+                    }
+                }
             }
             x += stepFX;
         }
@@ -136,15 +149,17 @@ public class Graph extends JComponent {
     private void drawGraphPoint(Graphics2D g2) {
         g2.setColor(Color.RED);
 
-        for (PointF point : listPoint) {
-            double y = point.y;
-            double x = point.x;
+        if (listPoint != null) {
+            for (PointF point : listPoint) {
+                double y = point.y;
+                double x = point.x;
 
-            int gx = (int) (x * stepX * (1f/stepValueX)  + XOY.x);
-            int gy = (int) (XOY.y - y * stepY * (1f/stepValueY) );
+                int gx = (int) (x * stepX * (1f / stepValueX) + XOY.x);
+                int gy = (int) (XOY.y - y * stepY * (1f / stepValueY));
 
-            if(gx < width) {
-                g2.drawArc(gx - 1, gy - 1, 2, 2, 0, 360);
+                if (gx < width) {
+                    g2.drawArc(gx - 1, gy - 1, 2, 2, 0, 360);
+                }
             }
         }
     }

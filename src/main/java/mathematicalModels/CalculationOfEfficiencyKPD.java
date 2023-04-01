@@ -4,7 +4,7 @@ import dataSourse.PowerDevice;
 
 import java.util.ArrayList;
 
-public class CalculationOfEfficiency {
+public class CalculationOfEfficiencyKPD {
 
     public static String calculationKpd(ArrayList<PowerDevice> listPower,String power) {
         int sumInputPower = 0;

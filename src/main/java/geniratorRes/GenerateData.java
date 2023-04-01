@@ -6,7 +6,7 @@ import dataSourse.PowerDevice;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class GenRes {
+public class GenerateData {
 
     private static final ArrayList<PowerDevice> arrayList = new ArrayList<>();
     private static final ArrayList<DevicesDeath> arrayListDeath = new ArrayList<>();

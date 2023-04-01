@@ -2,10 +2,11 @@ package ui.panel.panelDetailsSlider;
 
 import dataSourse.PointF;
 import dataSourse.PowerDevice;
-import mathematicalModels.CalculationOfEfficiency;
+import mathematicalModels.CalculationOfEfficiencyKPD;
 import mathematicalModels.PairAB;
 import mathematicalModels.SumOfSquaredErrorsSSE;
 import presentation.Presenter;
+import ui.componentsView.FunColorX;
 import ui.componentsView.Graph;
 import ui.main.MainApp;
 import ui.panel.interfacesPanel.InterfacePanel;
@@ -29,23 +30,30 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
         panelEffectivenessModule.setBackground(MainApp.getRGBColor(254,254,254));
         panelEffectivenessModule.setLayout(gridBagLayout);
 
-        createHeader(presenter);
-        createLabelKPD(presenter.device.power);
-        createGraphUi();
-    }
-
-    private void createGraphUi() {
         ArrayList<PointF> listPoints = getListPoints();
         PairAB pairAB = SumOfSquaredErrorsSSE.sse(listPoints);
+
+        createHeader(presenter);
+        createLabelKPD(presenter.device.power);
+        createGraphUi(pairAB,listPoints);
+        createDescriptionGraphUi(pairAB);
+    }
+
+    private void createGraphUi(PairAB pairAB, ArrayList<PointF> listPoints) {
         double a = pairAB.a;
         double b = pairAB.b;
 
-        Graph graph = new Graph( x -> a * x + b,listPoints,1f,10f,29,30,0,24+10);
-        addComponent(1,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
+        ArrayList<FunColorX> functions = new ArrayList<>();
+        functions.add(new FunColorX(x -> a * x + b ,MainApp.getRGBColor(50,50,255)));
 
-        JLabel nameGraph = new JLabel(getStringDescriptionMethod(a,b));
+        Graph graph = new Graph(functions,listPoints,1f,10f,29,30,0,24+10, new Dimension(800,400));
+        addComponent(1,3, graph,new Insets(10, 210, 0,0),1,1,0,GridBagConstraints.NORTH);
+    }
+
+    private void createDescriptionGraphUi(PairAB pairAB) {
+        JLabel nameGraph = new JLabel(getStringDescriptionMethod(pairAB.a,pairAB.b));
         nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
-        addComponent(1,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
+        addComponent(1,2, nameGraph,new Insets(60, 210, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createHeader(Presenter presenter) {
@@ -65,7 +73,7 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
     }
 
     private void createLabelKPD(String power) {
-        JLabel labelPowerInput = new JLabel(CalculationOfEfficiency.calculationKpd(listPower,power));
+        JLabel labelPowerInput = new JLabel(CalculationOfEfficiencyKPD.calculationKpd(listPower,power));
         labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 24));
 
         addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
@@ -108,7 +116,7 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
     public void actionPerformed(ActionEvent event) { }
 
     private String getStringDescriptionMethod(double a,double b) {
-        return "<html>Регрессионный анализ эффективности.<br><br>Метод наименьших общих квадратов" + "<br>" +
+        return "<html>Регрессионный анализ эффективности.<br>Метод наименьших общих квадратов." + "<br><br>" +
                 "<font color='#708090'>Ось X -время работы устройства в </font>( часах )<br>" +
                 "<font color='#708090'>Ось Y -КПД устройства в </font>( % )<br>" +
                 "<font color='#708090'>регрессионная прямая </font>y="+String.format("%.2f", a)+"*x+"+String.format("%.2f", b)+"</html>";

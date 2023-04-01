@@ -2,6 +2,7 @@ package ui.panel;
 
 import presentation.Presenter;
 import ui.componentsView.ComponentsView;
+import ui.componentsView.HintTextField;
 import ui.componentsView.MaterialButton;
 import ui.componentsView.MaterialButtonSlider;
 import ui.helperView.TextAnimator;
@@ -18,7 +19,7 @@ import java.awt.event.MouseListener;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import static dataSourse.TypeModules.*;
+import static dataSourse.constValue.TypeModules.*;
 import static ui.main.MainApp.baseUrlImage;
 
 public class PanelAnalyticalData implements MouseListener , InterfacePanel , CallbackTextAnimation{
@@ -31,10 +32,9 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
     private final MaterialButtonSlider slideButton2 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide2.png",baseUrlImage +"buttonSlide2_pressed.png",151,30);
     private final MaterialButtonSlider slideButton3 = new MaterialButtonSlider("Test", baseUrlImage +"buttonSlide3.png",baseUrlImage +"buttonSlide3_pressed.png",151,30);
 
-    private final JTextField searchData = new JTextField(15);
+    private final JTextField searchData = new HintTextField(" ->");
     private final Font fontAppName = new Font("Verdana", Font.PLAIN, 36);
-
-    private final JLabel labelSearchData = new JLabel("введите наименование прибора для выполнения анализа:");
+    private final JLabel labelSearchData = new JLabel("<html><font color='#708090'>введите наименование прибора для выполнения анализа </font>");
     private final JLabel appName = new JLabel("<html>Аналитический<br>модуль");
     private final JLabel labelInfo = new JLabel("");
 
@@ -83,20 +83,23 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
         searchButton.addMouseListener(this);
 
         int searchDataWidth = 800;
+        int searchButtonWidth = 101;
+
         searchData.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));
         searchData.setFont(new Font("Verdana", Font.PLAIN, 14));
-        addComponents(searchData, paddingStart,paddingTop, searchDataWidth,searchButtonHeight);
 
-        int searchButtonWidth = 101;
+        addComponents(searchData, paddingStart,paddingTop, searchDataWidth,searchButtonHeight);
         addComponents(searchButton, searchDataWidth + (paddingStart) ,paddingTop, searchButtonWidth,searchButtonHeight);
 
         int labelInfoWidth = 300;
         int labelInfoHeight = 30;
-        Font font = new Font("Verdana", Font.PLAIN, 15);
-        labelInfo.setFont(font);
-        addComponents(labelInfo, searchDataWidth + (2*paddingStart) + searchButtonWidth ,paddingTop, labelInfoWidth,labelInfoHeight);
 
+        Font font = new Font("Verdana", Font.PLAIN, 15);
+
+        labelInfo.setFont(font);
         labelSearchData.setFont(font);
+
+        addComponents(labelInfo, searchDataWidth + (2*paddingStart) + searchButtonWidth ,paddingTop, labelInfoWidth,labelInfoHeight);
         addComponents(labelSearchData,(paddingStart),paddingTop + searchButtonHeight, searchDataWidth,searchButtonHeight);
     }
 
@@ -115,9 +118,6 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
 
         ComponentsView componentsViewBottom = new ComponentsView(widthScreen);
         addComponents(componentsViewBottom, 0,paddingTopLine, widthScreen ,2);
-
-     //   ComponentsView componentsViewTop = new ComponentsView(widthScreen);
-     //   addComponents(componentsViewTop, 0,0, widthScreen ,1);
     }
 
     private void createLabelApp(int widthScreen)  {

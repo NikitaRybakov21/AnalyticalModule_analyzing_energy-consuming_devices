@@ -1,4 +1,4 @@
-package dataSourse;
+package dataSourse.constValue;
 
 public enum ResponseStatus {
     Login_isSuccessful,
