@@ -68,7 +68,7 @@ public class Graph extends JComponent {
     }
 
     private void drawBackground(Graphics2D g2) {
-        g2.setColor(MainApp.getRGBColor(244,244,244));
+        g2.setColor(MainApp.getRGBColor(246,246,246));
         g2.fillRoundRect(0,0,width,height,66,66);
     }
 

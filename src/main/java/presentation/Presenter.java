@@ -4,7 +4,6 @@ import dataBaseRepository.repository.RepositoryImpl;
 import dataSourse.*;
 import dataSourse.constValue.ResponseStatus;
 import dataSourse.constValue.TypeModules;
-import geniratorRes.GenerateData;
 import ui.main.MainApp;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
@@ -12,7 +11,6 @@ import ui.panel.panelDetailsSlider.PanelDefault;
 import ui.panel.panelDetailsSlider.PanelEffectivenessModule;
 import ui.panel.panelDetailsSlider.PanelLifeCycleModule;
 import ui.panel.panelDetailsSlider.PanelTechnicalSpecificationsModule;
-
 import javax.swing.*;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutorService;
@@ -92,9 +90,9 @@ public class Presenter implements InterfacePresenter {
         });
     }
 
- /*  public Device device = new Device("dd","ddd","ddd");
+ /*    public Device device = new Device("dd","ddd","ddd");
      public ProductivityDevices productivityDevices = new ProductivityDevices(5,754,4005,524);
-     public PlanningPeriod planningPeriod = new PlanningPeriod(0.1f*365f,1,0.8f,365);
+     public PlanningPeriod planningPeriod = new PlanningPeriod(0.3f*365f,1,1.7f,365);
      private ArrayList<PowerDevice> listPowerSave  = GenerateData.getArrayListPowerDevices() ;
      private ArrayList<DevicesDeath> listSurvivalDevices  = GenerateData.getArrayListSurvivalDevices() ;*/
 

@@ -8,6 +8,7 @@ import mathematicalModels.SumOfSquaredErrorsSSE;
 import presentation.Presenter;
 import ui.componentsView.FunColorX;
 import ui.componentsView.Graph;
+import ui.componentsView.GraphCircle;
 import ui.main.MainApp;
 import ui.panel.interfacesPanel.InterfacePanel;
 import javax.swing.*;
@@ -76,7 +77,11 @@ public class PanelEffectivenessModule implements ActionListener , InterfacePanel
         JLabel labelPowerInput = new JLabel(CalculationOfEfficiencyKPD.calculationKpd(listPower,power));
         labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 24));
 
-        addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
+        addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
+
+
+        GraphCircle graphCircle = new GraphCircle((int) CalculationOfEfficiencyKPD.getKPD(listPower));
+        addComponent(0,3, graphCircle,new Insets(60, 0, 0,0),1,1,0,GridBagConstraints.CENTER);
     }
 
     private ArrayList<PointF> getListPoints() {
