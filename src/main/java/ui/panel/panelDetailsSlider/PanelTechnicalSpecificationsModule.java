@@ -21,7 +21,8 @@ import static java.lang.Math.sin;
 
 public class PanelTechnicalSpecificationsModule implements ActionListener , InterfacePanel {
 
-    private final JPanel panelTechnicalSpecificationsModule = new JPanel();
+    private final JPanel panelTechnicalSpecificationsModule = MainApp.getStylePanel();
+
     private final GridBagLayout gridBagLayout = new GridBagLayout();
 
     private final GridBagConstraints constraints =  new GridBagConstraints();

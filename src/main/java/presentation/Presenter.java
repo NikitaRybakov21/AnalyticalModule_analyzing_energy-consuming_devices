@@ -49,7 +49,7 @@ public class Presenter implements InterfacePresenter {
             case MODULES_Effectiveness -> panelModule = new PanelEffectivenessModule(this,listPowerSave).getPanel();
             case MODULES_TechnicalSpecifications -> panelModule = new PanelTechnicalSpecificationsModule(this, listSurvivalDevices).getPanel();
             case MODULES_LifeCycleModule -> panelModule = new PanelLifeCycleModule(this,planningPeriod).getPanel();
-            case MODULES_Default -> panelModule = new PanelDefault(this).getPanel();
+            case MODULES_Default -> panelModule = new PanelDefault().getPanel();
         }
 
         panelAnalyticalData.setPanelDetails(panelModule);

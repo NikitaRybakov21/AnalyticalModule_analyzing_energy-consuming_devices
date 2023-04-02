@@ -81,6 +81,20 @@ public class MainApp extends JFrame implements InterfaceMainApp {
         presenter.panelCurrent = panel;
     }
 
+    public static JPanel getStylePanel() {
+        return new JPanel( new BorderLayout() ) {
+            @Override
+            public void paintComponent(Graphics g) {
+                super.paintComponent( g );
+                g.setColor( MainApp.getRGBColor(250,250,250) );
+
+                for ( int i = 0; i < getHeight(); i += 4 ) {
+                    g.fillRect( 0, i,  getWidth(), 2);
+                }
+            }
+        };
+    }
+
     public static Color getRGBColor(int r, int g, int b) {
         float[] hsb = Color.RGBtoHSB(r, g, b, null);
         return Color.getHSBColor(hsb[0], hsb[1], hsb[2]);

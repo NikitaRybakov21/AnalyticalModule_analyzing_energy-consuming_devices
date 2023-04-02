@@ -19,7 +19,8 @@ import java.util.ArrayList;
 
 public class PanelEffectivenessModule implements ActionListener , InterfacePanel {
 
-    private final JPanel panelEffectivenessModule = new JPanel();
+    private final JPanel panelEffectivenessModule = MainApp.getStylePanel();
+
     private final GridBagLayout gridBagLayout = new GridBagLayout();
 
     private final ArrayList<PowerDevice> listPower;

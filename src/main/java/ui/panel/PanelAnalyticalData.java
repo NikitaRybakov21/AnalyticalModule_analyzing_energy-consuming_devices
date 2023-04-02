@@ -24,7 +24,7 @@ import static ui.main.MainApp.baseUrlImage;
 
 public class PanelAnalyticalData implements MouseListener , InterfacePanel , CallbackTextAnimation{
 
-    private final JPanel panelAnalyticalData = new JPanel();
+    private final JPanel panelAnalyticalData = MainApp.getStylePanel();
 
     private final MaterialButton searchButton = new MaterialButton("Test", baseUrlImage +"buttonAnalytics.png",baseUrlImage +"buttonAnalytics_pressed.png",101,30);
 
@@ -62,7 +62,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
         createLabelApp(widthScreen);
         createSlider(widthScreen);
 
-        setPanelDetails(new PanelDefault(presenter).getPanel());
+        setPanelDetails(new PanelDefault().getPanel());
     }
 
     JPanel currentPanel = null;

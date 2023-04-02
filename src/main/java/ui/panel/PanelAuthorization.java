@@ -6,11 +6,15 @@ import ui.main.MainApp;
 import ui.helperView.TextAnimator;
 import ui.panel.interfacesPanel.CallbackTextAnimation;
 import ui.panel.interfacesPanel.InterfacePanel;
+
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,7 +22,30 @@ import static ui.main.MainApp.baseUrlImage;
 
 public class PanelAuthorization implements ActionListener , InterfacePanel , CallbackTextAnimation {
 
-    private final JPanel panelAuthorization = new JPanel();
+    private final JPanel panelAuthorization = new JPanel( new BorderLayout() ) {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent( g );
+            g.setColor( MainApp.getRGBColor(250,250,250) );
+
+            for ( int i = 0; i < getHeight(); i += 4 ) {
+                g.fillRect( 0, i,  getWidth(), 2);
+            }
+
+            Image imBack = null;
+            File fileButton = new File(baseUrlImage + "background.png");
+            try {
+                imBack = ImageIO.read(fileButton);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            int imageH = 563;
+            int imageW = 1000;
+            g.drawImage(imBack,getWidth()/2 - imageW/2,getHeight()/2 - imageH/2,imageW,imageH,null);
+        }
+    };
+
     private final GridBagLayout gridBagLayout = new GridBagLayout();
 
     private final MaterialButton buttonLogin = new MaterialButton("Test", baseUrlImage + "buttonLogin.png",baseUrlImage + "buttonLogin_pressed.png",338/2,114/2);

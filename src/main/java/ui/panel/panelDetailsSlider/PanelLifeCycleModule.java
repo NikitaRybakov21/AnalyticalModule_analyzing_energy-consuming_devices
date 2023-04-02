@@ -20,7 +20,8 @@ import static java.lang.Math.sin;
 
 public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
 
-    private final JPanel panelLifeCycleModule = new JPanel();
+    private final JPanel panelLifeCycleModule = MainApp.getStylePanel();
+
     private final GridBagLayout gridBagLayout = new GridBagLayout();
     private final GridBagConstraints constraints =  new GridBagConstraints();
 

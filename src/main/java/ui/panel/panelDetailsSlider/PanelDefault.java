@@ -1,6 +1,6 @@
 package ui.panel.panelDetailsSlider;
 
-import presentation.Presenter;
+
 import ui.main.MainApp;
 import ui.panel.interfacesPanel.InterfacePanel;
 import javax.swing.*;
@@ -10,11 +10,12 @@ import java.awt.*;
 import static ui.main.MainApp.baseUrlImage;
 
 public class PanelDefault implements InterfacePanel {
-    private final JPanel panelDefault = new JPanel();
+    private final JPanel panelDefault = MainApp.getStylePanel();
+
     private final GridBagLayout gridBagLayout = new GridBagLayout();
     private final GridBagConstraints constraints =  new GridBagConstraints();
 
-    public PanelDefault(Presenter presenter) {
+    public PanelDefault() {
         panelDefault.setBackground(MainApp.getRGBColor(254,254,254));
         panelDefault.setLayout(gridBagLayout);
 
