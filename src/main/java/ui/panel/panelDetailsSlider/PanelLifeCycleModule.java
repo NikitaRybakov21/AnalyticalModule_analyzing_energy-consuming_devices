@@ -63,12 +63,10 @@ public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
 
     private void createDescriptionGraphUi1(InventoryManagementModels inventoryMM) {
         JLabel nameGraph = new JLabel(getDescriptionGraphUi1());
-        nameGraph.setMaximumSize(nameGraph.getMaximumSize());
         nameGraph.setFont(new Font("Verdana", Font.PLAIN, 18));
         addComponent(0,2, nameGraph,new Insets(20, 0, 0,0),1,1,0,GridBagConstraints.WEST);
 
         JLabel nameGraph2 = new JLabel(getDescriptionGraphUi1Part2(inventoryMM));
-        nameGraph2.setMaximumSize(nameGraph.getMaximumSize());
         nameGraph2.setFont(new Font("Verdana", Font.PLAIN, 17));
         addComponent(1,2, nameGraph2,new Insets(0, 0, 0,0),1,1,0,GridBagConstraints.SOUTH);
     }

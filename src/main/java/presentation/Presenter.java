@@ -24,7 +24,7 @@ public class Presenter implements InterfacePresenter {
     private final PanelAuthorization panelAuthorization = new PanelAuthorization(this);
     private PanelAnalyticalData panelAnalyticalData = new PanelAnalyticalData(this,MainApp.sizeX,MainApp.sizeY);
 
-    public final MainApp mainApp;
+    private final MainApp mainApp;
     public JPanel panelCurrent;
 
     private final ExecutorService service = Executors.newCachedThreadPool();
