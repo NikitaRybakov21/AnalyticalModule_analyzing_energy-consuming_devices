@@ -24,7 +24,17 @@ import static ui.main.MainApp.baseUrlImage;
 
 public class PanelAnalyticalData implements MouseListener , InterfacePanel , CallbackTextAnimation{
 
-    private final JPanel panelAnalyticalData = MainApp.getStylePanel();
+    private final JPanel panelAnalyticalData = new JPanel( new BorderLayout() ) {
+        @Override
+        public void paintComponent(Graphics g) {
+            super.paintComponent( g );
+            g.setColor( MainApp.getRGBColor(253,253,253));
+
+            for ( int i = 0; i < getHeight(); i += 2 ) {
+                g.fillRect( 0, i,  getWidth(), 1);
+            }
+        }
+    };;
 
     private final MaterialButton searchButton = new MaterialButton("Test", baseUrlImage +"buttonAnalytics.png",baseUrlImage +"buttonAnalytics_pressed.png",101,30);
 
@@ -44,7 +54,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
     private final ExecutorService service = Executors.newCachedThreadPool();
 
     private final int paddingStart = 20;
-    private final int paddingTop = 30;
+    private final int paddingTop = 20;
     private final int searchButtonHeight = 30;
 
     private final int widthScreen;
@@ -59,8 +69,8 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
         panelAnalyticalData.setBackground(MainApp.getRGBColor(240,240,254));
 
         createSearch();
-        createLabelApp(widthScreen);
-        createSlider(widthScreen);
+        createLabelApp(this.widthScreen);
+        createSlider(this.widthScreen);
 
         setPanelDetails(new PanelDefault().getPanel());
     }
@@ -82,7 +92,7 @@ public class PanelAnalyticalData implements MouseListener , InterfacePanel , Cal
     private void createSearch()  {
         searchButton.addMouseListener(this);
 
-        int searchDataWidth = 800;
+        int searchDataWidth = 700;
         int searchButtonWidth = 101;
 
         searchData.setBorder(new LineBorder(Color.LIGHT_GRAY, 2));

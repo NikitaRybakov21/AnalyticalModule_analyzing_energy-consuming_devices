@@ -52,22 +52,24 @@ public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
         functions.add(new FunColorX(inventoryMM.getFunctionSumCost(),MainApp.getRGBColor(255, 50, 50)));
 
         ArrayList<PointF> listPoint = new ArrayList<>();
-        for (float i = 0; i < 30; i += 1.2f) {
+        for (float i = 0; i < 300; i += 12f) {
             listPoint.add(new PointF(inventoryMM.getOptimalSizeOrder(),i));
         }
 
-        Graph graph = new Graph(functions,listPoint,5,5f,50,50,0,100,new Dimension(1000,400));
+        Graph graph = new Graph(functions,listPoint,5,50f,50,44,0,100,new Dimension(800,350));
 
-        addComponent(0,3, graph,new Insets(10, 110, 0,0),2,1,0,GridBagConstraints.WEST);
+        addComponent(0,3, graph,new Insets(10, 0, 0,0),2,1,0,GridBagConstraints.WEST);
     }
 
     private void createDescriptionGraphUi1(InventoryManagementModels inventoryMM) {
         JLabel nameGraph = new JLabel(getDescriptionGraphUi1());
-        nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
-        addComponent(0,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.WEST);
+        nameGraph.setMaximumSize(nameGraph.getMaximumSize());
+        nameGraph.setFont(new Font("Verdana", Font.PLAIN, 18));
+        addComponent(0,2, nameGraph,new Insets(20, 0, 0,0),1,1,0,GridBagConstraints.WEST);
 
         JLabel nameGraph2 = new JLabel(getDescriptionGraphUi1Part2(inventoryMM));
-        nameGraph2.setFont(new Font("Verdana", Font.PLAIN, 18));
+        nameGraph2.setMaximumSize(nameGraph.getMaximumSize());
+        nameGraph2.setFont(new Font("Verdana", Font.PLAIN, 17));
         addComponent(1,2, nameGraph2,new Insets(0, 0, 0,0),1,1,0,GridBagConstraints.SOUTH);
     }
 
@@ -75,14 +77,14 @@ public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
         ArrayList<FunColorX> functions = new ArrayList<>();
         functions.add(new FunColorX(inventoryMM.getFunctionInventory() ,MainApp.getRGBColor(255,100,100)));
 
-        Graph graph = new Graph(functions,null,26,5f,50,50,0,365,new Dimension(800,400));
-        addComponent(2,3, graph,new Insets(10, 150, 0,0),1,1,0,GridBagConstraints.WEST);
+        Graph graph = new Graph(functions,null,30,5f,50,44,0,365,new Dimension(700,350));
+        addComponent(2,3, graph,new Insets(10, 50, 0,0),1,1,0,GridBagConstraints.WEST);
     }
 
     private void createDescriptionGraphUi2() {
         JLabel nameGraph = new JLabel(getDescriptionGraphUi2());
-        nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
-        addComponent(2,2, nameGraph,new Insets(60, 150, 0,0),1,1,0,GridBagConstraints.WEST);
+        nameGraph.setFont(new Font("Verdana", Font.PLAIN, 18));
+        addComponent(2,2, nameGraph,new Insets(60, 50, 0,0),1,1,0,GridBagConstraints.WEST);
     }
 
     private void createHeader(Presenter presenter) {
@@ -93,8 +95,8 @@ public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
 
         JLabel label = new JLabel("Управление запасами оборудования");
         JLabel labelNameDevices = new JLabel("<html>оборудование: <font color='green'>" + nameDevices + "</font></html>");
-        labelNameDevices.setFont(new Font("Verdana", Font.BOLD, 18));
-        label.setFont(new Font("Verdana", Font.PLAIN, 40));
+        labelNameDevices.setFont(new Font("Verdana", Font.BOLD, 14));
+        label.setFont(new Font("Verdana", Font.PLAIN, 36));
 
         addComponent(0,0, label,new Insets(0, 0, 0,0),3,1,0,GridBagConstraints.CENTER);
         addComponent(0,1, labelNameDevices,new Insets(15, 0, 0,0),3,1,0,GridBagConstraints.CENTER);
@@ -138,12 +140,12 @@ public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
     }
 
     private String getDescriptionGraphUi2() {
-        return  "<html>Динамика изменения количества продукта Q на складе.<br><br>" +
+        return  "<html>Динамика изменения количества продукта Q на складе.<p><p>" +
 
-                "График количества оборудования на складе -<br>" +
-                "построеный по методу минимальных совокупных издержек.<br><br>" +
-                "<font color='#708090'>Ось X -время в:</font> днях <br>" +
-                "<font color='#708090'>Ось Y -количество оборудование на складе в: </font> тонах <br>";
+                "График количества оборудования на складе -<p>" +
+                "построеный по методу минимальных совокупных издержек.<p><p>" +
+                "<font color='#708090'>Ось X -время в:</font> днях <p>" +
+                "<font color='#708090'>Ось Y -количество оборудование на складе в: </font> тонах";
     }
 
     @Override

@@ -83,9 +83,11 @@ public class Graph extends JComponent {
         divisions(g2);
 
         g2.setColor(Color.BLACK);
-        g2.setFont(new Font("Verdana", Font.PLAIN, 25));
-        g2.drawString("Y", XOY.x - padding/1.5f, y1.y);
-        g2.drawString("X" , x1.x, XOY.y + padding/1.5f);
+        g2.setFont(new Font("Verdana", Font.PLAIN, 18));
+
+        int paddingXY = 14;
+        g2.drawString("Y", XOY.x - padding/1.5f, y1.y - paddingXY);
+        g2.drawString("X" , x1.x + paddingXY, XOY.y + padding/1.5f);
         g2.setFont(font);
     }
 

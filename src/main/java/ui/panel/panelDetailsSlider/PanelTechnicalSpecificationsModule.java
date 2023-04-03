@@ -46,24 +46,24 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
         }
 
         JLabel labelPowerInput = new JLabel(label);
-        labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 24));
+        labelPowerInput.setFont(new Font("Verdana", Font.PLAIN, 20));
 
-        addComponent(0,2, labelPowerInput,new Insets(60, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
+        addComponent(0,2, labelPowerInput,new Insets(30, 0, 0,0),1,2,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createGraphUi(KaplanMeierEstimator kaplanMeierEstimator) {
         ArrayList<FunColorX> functions = new ArrayList<>();
         functions.add(new FunColorX(x -> kaplanMeierEstimator.funSurviveKaplanMeier(x) * 1 ,MainApp.getRGBColor(255,100,100)));
 
-        Graph graph = new Graph(functions,null,5,0.2f,50,60,0,70, new Dimension(800,400));
-        addComponent(1,3, graph,new Insets(10, 110, 0,0),1,1,0,GridBagConstraints.NORTH);
+        Graph graph = new Graph(functions,null,5,0.2f,42,52,0,70, new Dimension(700,350));
+        addComponent(1,3, graph,new Insets(10, 50, 0,0),1,1,0,GridBagConstraints.NORTH);
     }
 
     private void createDescriptionGraphUi(KaplanMeierEstimator kaplanMeierEstimator) {
         JLabel nameGraph = new JLabel(getStringDescriptionMethod(kaplanMeierEstimator.getTimeLiveAVG()));
 
-        nameGraph.setFont(new Font("Verdana", Font.PLAIN, 24));
-        addComponent(1,2, nameGraph,new Insets(60, 110, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
+        nameGraph.setFont(new Font("Verdana", Font.PLAIN, 20));
+        addComponent(1,2, nameGraph,new Insets(30, 50, 0,0),1,1,0,GridBagConstraints.HORIZONTAL);
     }
 
     private void createHeader(Presenter presenter) {
@@ -74,8 +74,8 @@ public class PanelTechnicalSpecificationsModule implements ActionListener , Inte
 
         JLabel label = new JLabel("Характеристики надёжности устройтва");
         JLabel labelNameDevices = new JLabel("<html>оборудование: <font color='green'>" + nameDevices + "</font></html>");
-        labelNameDevices.setFont(new Font("Verdana", Font.BOLD, 18));
-        label.setFont(new Font("Verdana", Font.PLAIN, 40));
+        labelNameDevices.setFont(new Font("Verdana", Font.BOLD, 14));
+        label.setFont(new Font("Verdana", Font.PLAIN, 36));
 
         addComponent(0,0, label,new Insets(0, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
         addComponent(0,1, labelNameDevices,new Insets(15, 0, 0,0),2,1,0,GridBagConstraints.CENTER);
