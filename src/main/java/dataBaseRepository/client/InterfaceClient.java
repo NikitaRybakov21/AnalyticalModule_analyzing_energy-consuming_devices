@@ -15,4 +15,7 @@ public interface InterfaceClient {
     ArrayList<DevicesDeath> getListSurviveDevices(String id);
     ProductivityDevices getProductivityDevices(String id);
     PlanningPeriod getPlaningPeriod(String id);
+    void setItemDevices(Device device);
+    void setItemProductivityDevices(ProductivityDevices device);
+    void setItemPlaningPeriod(PlanningPeriod device);
 }

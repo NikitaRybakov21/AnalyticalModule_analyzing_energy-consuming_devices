@@ -4,6 +4,7 @@ import dataBaseRepository.repository.RepositoryImpl;
 import dataSourse.*;
 import dataSourse.constValue.ResponseStatus;
 import dataSourse.constValue.TypeModules;
+import geniratorRes.GenerateData;
 import ui.main.MainApp;
 import ui.panel.PanelAnalyticalData;
 import ui.panel.PanelAuthorization;
@@ -90,9 +91,9 @@ public class Presenter implements InterfacePresenter {
         });
     }
 
- /*    public Device device = new Device("dd","ddd","ddd");
-     public ProductivityDevices productivityDevices = new ProductivityDevices(5,754,4005,524);
-     public PlanningPeriod planningPeriod = new PlanningPeriod(0.3f*365f,1,1.7f,365);
+ /*    public Device device = new Device("ЭлементПельтье R5","304","200");
+     public ProductivityDevices productivityDevices = new ProductivityDevices(304,754,4800,4020);
+     public PlanningPeriod planningPeriod = new PlanningPeriod(304,0.08f*365f,10,2f,365);
      private ArrayList<PowerDevice> listPowerSave  = GenerateData.getArrayListPowerDevices() ;
      private ArrayList<DevicesDeath> listSurvivalDevices  = GenerateData.getArrayListSurvivalDevices() ;*/
 
@@ -105,7 +106,8 @@ public class Presenter implements InterfacePresenter {
     @Override
     public void sendGetDeviceToAnalytical(String name) {
         service.submit(() -> {
-            device = repository.sendGetDevices(name,listSurvivalDevices);
+
+            device = repository.sendGetDevices(name);
 
             if (device != null) {
                 listPowerSave = repository.getListPowerDevices(device.id);

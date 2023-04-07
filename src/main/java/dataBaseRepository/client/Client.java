@@ -76,6 +76,19 @@ public class Client implements InterfaceClient {
     }
 
     @Override
+    public void setItemDevices(Device device) {
+        String query = "INSERT INTO devices (iddevices,name,power) VALUES ('" + device.id + "','" + device.name + "','"+ device.power + "');";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            int rs = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public void addHistory(User user) {
         String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
         String query =  "INSERT INTO History (username,date) VALUES ('"+user.login+"','"+date+"');";
@@ -188,6 +201,19 @@ public class Client implements InterfaceClient {
     }
 
     @Override
+    public void setItemProductivityDevices(ProductivityDevices device) {
+        String query = "INSERT INTO productivity_devices (iddevices,period_work,productivityfirst,productivitylast) VALUES ('" + device.id + "','" + device.periodWork + "','"+ device.productivityFirst + "','"+ device.productivityLast + "');";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            int rs = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public PlanningPeriod getPlaningPeriod(String id) {
         String query =  "SELECT * FROM planning_period WHERE iddevices_model = '"+id+"'";
         PlanningPeriod planningPeriod = null;
@@ -198,6 +224,7 @@ public class Client implements InterfaceClient {
 
             if (rs.next()) {
                 planningPeriod = new PlanningPeriod(
+                        Integer.parseInt(rs.getString("iddevices_model")),
                         Float.parseFloat(rs.getString("requirement_periodD")),
                         Float.parseFloat(rs.getString("order_costsK")),
                         Float.parseFloat(rs.getString("storage_costH")),
@@ -208,5 +235,19 @@ public class Client implements InterfaceClient {
             e.printStackTrace();
         }
         return planningPeriod;
+    }
+
+    @Override
+    public void setItemPlaningPeriod(PlanningPeriod device) {
+        String query = "INSERT INTO planning_period (iddevices_model,requirement_periodD,order_costsK,storage_costH,planning_periodT) " +
+                "VALUES ('" + device.id + "','" + device.D + "','"+ device.K + "','"+ device.H + "','"+ device.T + "');";
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            int rs = preparedStatement.executeUpdate();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

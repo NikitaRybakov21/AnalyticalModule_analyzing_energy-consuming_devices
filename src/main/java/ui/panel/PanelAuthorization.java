@@ -160,7 +160,7 @@ public class PanelAuthorization implements ActionListener , InterfacePanel , Cal
                 presenter.sendDataBaseAuthorization(password, login);
             } else {
                 notValidError();
-              //  loginSuccessful();
+             //   loginSuccessful();
             }
         }
 

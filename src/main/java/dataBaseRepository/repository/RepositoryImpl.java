@@ -41,17 +41,21 @@ public class RepositoryImpl implements InterfaceRepository {
     }
 
     @Override
-    public Device sendGetDevices(String name, ArrayList<DevicesDeath> list) {
-
+    public Device sendGetDevices(String name) {
         Device device = clientMapper.getDevices(name);
-
-  /*   if (device != null) {
-            clientMapper.setDataDeathDevices(list);
-            System.out.println("ок set");
-        }*/
 
         clientMapper.addHistory(userSaved);
         return device;
+    }
+
+    public void saveDataDevices(ArrayList<DevicesDeath> list, ArrayList<PowerDevice> listPowerSave,Device device,ProductivityDevices productivityDevices,PlanningPeriod planningPeriod) {
+        clientMapper.setDataDeathDevices(list);
+        clientMapper.setDataPowerDevices(listPowerSave);
+        clientMapper.setItemDevices(device);
+        clientMapper.setItemProductivityDevices(productivityDevices);
+        clientMapper.setItemPlaningPeriod(planningPeriod);
+
+        System.out.println("ок set");
     }
 
     @Override
@@ -71,4 +75,5 @@ public class RepositoryImpl implements InterfaceRepository {
 
     @Override
     public PlanningPeriod getPlanningPeriod(String id) { return clientMapper.getPlaningPeriod(id); }
+
 }

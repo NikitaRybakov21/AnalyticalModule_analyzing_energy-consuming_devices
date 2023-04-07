@@ -25,7 +25,7 @@ public class PanelLifeCycleModule implements ActionListener  , InterfacePanel {
     private final GridBagLayout gridBagLayout = new GridBagLayout();
     private final GridBagConstraints constraints =  new GridBagConstraints();
 
-    // 0.1f*365f,1,0.8f,365
+    // 0.1f*365f,10,8f,365
 
     public PanelLifeCycleModule(Presenter presenter, PlanningPeriod planningPeriod) {
         panelLifeCycleModule.setBackground(MainApp.getRGBColor(254,254,254));

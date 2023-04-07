@@ -25,7 +25,7 @@ public class MainApp extends JFrame implements InterfaceMainApp {
 
         setSize(sizeX,sizeY);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setExtendedState(JFrame.MAXIMIZED_BOTH);
+    //    setExtendedState(JFrame.MAXIMIZED_BOTH);
 
         ImageIcon img = new ImageIcon(baseUrlImage +"module.png");
         setIconImage(img.getImage());
