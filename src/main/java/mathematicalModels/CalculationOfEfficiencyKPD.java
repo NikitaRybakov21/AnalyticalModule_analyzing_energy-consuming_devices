@@ -19,8 +19,8 @@ public class CalculationOfEfficiencyKPD {
         String kpd = String.format("%.2f", valueKpd);
         return "<html>"+"Расчёт среднего значения КПД.<br><br>" +
                // "<font color='#708090'>Исходная мощность устройства: </font>"+power+" ватт<br><br>" +
-                "<font color='#708090'>Oбщая потребляемая мощность: </font>"+sumInputPower+" ватт<br>" +
-                "<font color='#708090'>Oбщая производимая полезная мощность: </font>"+sumEffPower+" ватт<br>" +
+                "<font color='#708090'>Oбщая потребляемая мощность: </font>"+sumInputPower/1000f+" кВт<br>" +
+                "<font color='#708090'>Oбщая производимая полезная мощность: </font>"+sumEffPower/1000f+" кВт<br>" +
                 "<font color='#708090'>Oбщее время работы: </font>"+timeSum+" cек<br>  <br>" +
                 "<font color='#708090'>Среднее </font>КПД = "+kpd+"%";
     }
